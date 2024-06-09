@@ -1,0 +1,20 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL,
+    about_me TEXT NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    avatar_public_id VARCHAR(255) NOT NULL,
+    avatar_url VARCHAR(255) NOT NULL,
+    resume_public_id VARCHAR(255) NOT NULL,
+    resume_url VARCHAR(255) NOT NULL,
+    portfolio_url VARCHAR(255) NOT NULL,
+    github_url VARCHAR(255),
+    instagram_url VARCHAR(255),
+    twitter_url VARCHAR(255),
+    linkedin_url VARCHAR(255),
+    facebook_url VARCHAR(255),
+    reset_password_token VARCHAR(255),
+    reset_password_expire TIMESTAMP
+);

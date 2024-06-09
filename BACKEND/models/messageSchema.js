@@ -1,4 +1,4 @@
-import pg from "pg";
+
 import db from "../database/dbconnection.js"
 
 // Function to create a new message

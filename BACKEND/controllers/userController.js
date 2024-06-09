@@ -4,24 +4,11 @@ import db from "../database/dbconnection.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
+import { generateToken } from "../utils/jwtToken.js";
 import ErrorHandler from "../middlewares/error.js";
 import { sendEmail } from "../utils/sendEmail.js";
 
-// Helper function to generate token
-const generateToken = (user, message, statusCode, res) => {
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: process.env.JWT_EXPIRES,
-  });
-  res.status(statusCode).cookie("token", token, {
-    httpOnly: true,
-    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
-  }).json({
-    success: true,
-    message,
-    user,
-    token,
-  });
-};
+
 
 // Register a new user
 export const register = catchAsyncErrors(async (req, res, next) => {

@@ -7,6 +7,7 @@ import fileUpload from "express-fileupload";
 import db from "./database/dbconnection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import messageRoutes from "./routes/messageRouter.js";
+import userRoutes from "./routes/userRouter.js"
 
 
 const app=express();
@@ -14,7 +15,7 @@ dotenv.config({path:"./config/config.env"});
 
 
 app.use(cors({
-    origin:[process.env.PORTFOLIO_URL,process.env.PORTFOLIO_URL],
+    origin:[process.env.PORTFOLIO_URL,process.env.DASHBOARD_URL],
     methods:["GET","POST","DELETE","PUT"],
     credentials:true,
 }))
@@ -32,9 +33,12 @@ app.use(fileUpload({
 })
 );
 
-app.use(errorMiddleware);
 // Use message routes
-app.use('/api', messageRoutes);
+app.use('/api/v1/message', messageRoutes);
+app.use('/api/v1/user',userRoutes);
+
+app.use(errorMiddleware);
+
 
 
 

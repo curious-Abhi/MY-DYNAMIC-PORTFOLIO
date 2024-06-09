@@ -1,9 +1,10 @@
-import db from '../database/dbconnection.js';
+import pg from "pg";
+import db from "../database/dbconnection.js"
 
 // Function to create a new message
 export const createMessage = async ({ senderName, subject, message }) => {
   const query = `
-    INSERT INTO messages (sender_name, subject, message)
+    INSERT INTO messages (senderName, subject, message)
     VALUES ($1, $2, $3)
     RETURNING *
   `;
@@ -19,7 +20,7 @@ export const createMessage = async ({ senderName, subject, message }) => {
 
 // Function to get all messages
 export const getAllMessages = async () => {
-  const query = 'SELECT * FROM messages ORDER BY created_at DESC';
+  const query = 'SELECT * FROM messages ORDER BY createdat DESC';
 
   try {
     const res = await db.query(query);

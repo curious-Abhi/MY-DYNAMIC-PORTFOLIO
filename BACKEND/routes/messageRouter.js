@@ -1,5 +1,5 @@
 import express from 'express';
-import { sendMessage, getAllMessages, deleteMessage } from '../controllers/messageController.js';
+import { sendMessage, fetchAllMessages, deleteMessage } from '../controllers/messageController.js';
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/messages', sendMessage);
 
 // Route to get all messages
-router.get('/messages', getAllMessages);
+router.get('/messages', fetchAllMessages);
 
 // Route to delete a message by ID
 router.delete('/messages/:id', deleteMessage);

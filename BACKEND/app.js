@@ -1,4 +1,5 @@
 import express, { urlencoded } from "express";
+import bodyParser from 'body-parser';
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -20,6 +21,7 @@ app.use(cors({
 
 
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 

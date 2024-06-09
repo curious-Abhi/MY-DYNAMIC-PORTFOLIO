@@ -1,3 +1,4 @@
+/*
 import express from "express";
 import {
   getUser,
@@ -24,4 +25,13 @@ router.put("/me/profile/update", isAuthenticated, updateProfile);
 router.post("/password/forgot", forgotPassword);
 router.put("/password/reset/:token", resetPassword);
 
+export default router;
+*/
+
+
+import express  from "express";
+import { register } from "../controllers/userController.js";
+
+const router=express.Router();
+router.post("/register",register);
 export default router;

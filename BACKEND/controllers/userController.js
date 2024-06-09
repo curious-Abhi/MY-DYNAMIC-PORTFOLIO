@@ -2,13 +2,10 @@ import { v2 as cloudinary } from "cloudinary";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import db from "../database/dbconnection.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { generateToken } from "../utils/jwtToken.js";
+import { generateToken } from "../utils/jwtToken.js"; 
 import ErrorHandler from "../middlewares/error.js";
 import { sendEmail } from "../utils/sendEmail.js";
-
-
 
 // Register a new user
 export const register = catchAsyncErrors(async (req, res, next) => {
@@ -52,11 +49,14 @@ export const register = catchAsyncErrors(async (req, res, next) => {
   try {
     const result = await db.query(query, values);
     const user = result.rows[0];
-    generateToken(user, "Registered!", 201, res);
+    generateToken(user, "Registered!", 201, res); // Use the generateToken function
   } catch (error) {
     return next(new ErrorHandler("Failed to create user: " + error.message, 500));
   }
 });
+
+
+
 
 // Login user
 export const login = catchAsyncErrors(async (req, res, next) => {
@@ -89,6 +89,7 @@ export const login = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
+/*
 // Logout user
 export const logout = catchAsyncErrors(async (req, res, next) => {
   res.status(200).cookie("token", "", {
@@ -330,3 +331,7 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Failed to reset password: " + error.message, 500));
   }
 });
+
+
+
+*/

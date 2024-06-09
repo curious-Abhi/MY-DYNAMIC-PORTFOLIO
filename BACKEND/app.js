@@ -35,6 +35,7 @@ app.use(fileUpload({
 
 // Use message routes
 app.use('/api/v1/message', messageRoutes);
+//Use user routes
 app.use('/api/v1/user',userRoutes);
 
 app.use(errorMiddleware);

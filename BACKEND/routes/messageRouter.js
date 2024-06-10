@@ -1,5 +1,6 @@
 import express from 'express';
 import { sendMessage, fetchAllMessages, deleteMessage } from '../controllers/messageController.js';
+import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -10,6 +11,6 @@ router.post('/send', sendMessage);
 router.get('/getall', fetchAllMessages);
 
 // Route to delete a message by ID
-router.delete('/messages/:id', deleteMessage);
+router.delete('/delete/:id',isAuthenticated, deleteMessage);
 
 export default router;

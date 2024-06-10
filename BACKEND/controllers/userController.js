@@ -89,7 +89,7 @@ export const login = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-/*
+
 // Logout user
 export const logout = catchAsyncErrors(async (req, res, next) => {
   res.status(200).cookie("token", "", {
@@ -100,6 +100,8 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
     message: "Logged Out!",
   });
 });
+
+
 
 // Get user profile
 export const getUser = catchAsyncErrors(async (req, res, next) => {
@@ -118,6 +120,8 @@ export const getUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Failed to get user: " + error.message, 500));
   }
 });
+
+/*
 
 // Update user profile
 export const updateProfile = catchAsyncErrors(async (req, res, next) => {

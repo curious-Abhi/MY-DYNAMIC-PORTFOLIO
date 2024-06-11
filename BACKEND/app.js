@@ -4,11 +4,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
-import db from "./database/dbconnection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import messageRoutes from "./routes/messageRouter.js";
-import userRoutes from "./routes/userRouter.js"
-import timeLineRouter from "./routes/timeLineRouter.js"
+import userRoutes from "./routes/userRouter.js";
+import timelineRouter from "./routes/timelineRouter.js";
 
 
 const app=express();
@@ -39,7 +38,7 @@ app.use('/api/v1/message', messageRoutes);
 //Use user routes
 app.use('/api/v1/user',userRoutes);
 //use timeLine routes
-app.use('api/v1/timeLine',timeLineRouter);
+app.use('api/v1/timeline',timelineRouter);
 
 app.use(errorMiddleware);
 

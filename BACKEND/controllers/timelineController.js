@@ -1,4 +1,3 @@
-
 import { catchAsyncErrors } from '../middlewares/catchAsyncErrors.js';
 import ErrorHandler from '../middlewares/error.js';
 import db from '../database/dbconnection.js';

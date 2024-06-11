@@ -299,9 +299,9 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
     const resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
     const resetPasswordExpire = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10 minutes
 
-    console.log("Generated Reset Token:", resetToken);
-    console.log("Hashed Reset Token:", resetPasswordToken);
-    console.log("Reset Password Expire:", resetPasswordExpire);
+    // console.log("Generated Reset Token:", resetToken);
+    // console.log("Hashed Reset Token:", resetPasswordToken);
+    // console.log("Reset Password Expire:", resetPasswordExpire);
 
     const updateQuery = "UPDATE users SET reset_password_token = $1, reset_password_expire = $2 WHERE email = $3";
     await db.query(updateQuery, [resetPasswordToken, resetPasswordExpire, user.email]);
@@ -337,9 +337,9 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
   // Get current time as ISO string
   const currentTime = new Date().toISOString();
 
-  console.log("Received Reset Token:", resetToken);
-  console.log("Hashed Reset Token:", resetPasswordToken);
-  console.log("Current Time:", currentTime);
+  // console.log("Received Reset Token:", resetToken);
+  // console.log("Hashed Reset Token:", resetPasswordToken);
+  // console.log("Current Time:", currentTime);
 
   const query = "SELECT * FROM users WHERE reset_password_token = $1 AND reset_password_expire > $2";
   const values = [resetPasswordToken, currentTime];

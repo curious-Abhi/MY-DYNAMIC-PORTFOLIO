@@ -8,6 +8,7 @@ import db from "./database/dbconnection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import messageRoutes from "./routes/messageRouter.js";
 import userRoutes from "./routes/userRouter.js"
+import timeLineRouter from "./routes/timeLineRouter.js"
 
 
 const app=express();
@@ -37,6 +38,8 @@ app.use(fileUpload({
 app.use('/api/v1/message', messageRoutes);
 //Use user routes
 app.use('/api/v1/user',userRoutes);
+//use timeLine routes
+app.use('api/v1/timeLine',timeLineRouter);
 
 app.use(errorMiddleware);
 

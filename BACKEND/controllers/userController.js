@@ -105,12 +105,23 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
 
 // Get user profile
 export const getUser = catchAsyncErrors(async (req, res, next) => {
-  const query = "SELECT * FROM users WHERE id = $1";
+  //const query = "SELECT * FROM users WHERE id = $1";
+  const query = `
+    SELECT id, full_name, email, phone, about_me, avatar_public_id, avatar_url, 
+           resume_public_id, resume_url, portfolio_url, github_url, instagram_url, 
+           twitter_url, linkedin_url, facebook_url 
+    FROM users 
+    WHERE id = $1
+  `;
   const values = [req.user.id];
 
   try {
     const result = await db.query(query, values);
     const user = result.rows[0];
+
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
 
     res.status(200).json({
       success: true,
@@ -121,7 +132,7 @@ export const getUser = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-/*
+
 
 // Update user profile
 export const updateProfile = catchAsyncErrors(async (req, res, next) => {
@@ -238,15 +249,27 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
+
+
 // Get user for portfolio
 export const getUserForPortfolio = catchAsyncErrors(async (req, res, next) => {
-  const id = "663296a896e553748ab5b0be";
-  const query = "SELECT * FROM users WHERE id = $1";
+  const id = "1";
+  const query = `
+    SELECT id, full_name, email, phone, about_me, avatar_public_id, avatar_url, 
+           resume_public_id, resume_url, portfolio_url, github_url, instagram_url, 
+           twitter_url, linkedin_url, facebook_url 
+    FROM users 
+    WHERE id = $1
+  `;
   const values = [id];
 
   try {
     const result = await db.query(query, values);
     const user = result.rows[0];
+
+    if (!user) {
+      return next(new ErrorHandler("User not found", 404));
+    }
 
     res.status(200).json({
       success: true,
@@ -256,6 +279,8 @@ export const getUserForPortfolio = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Failed to get user: " + error.message, 500));
   }
 });
+
+
 
 // Forgot password
 export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
@@ -300,6 +325,9 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Failed to initiate password reset: " + error.message, 500));
   }
 });
+
+
+/*
 
 // Reset password
 export const resetPassword = catchAsyncErrors(async (req, res, next) => {

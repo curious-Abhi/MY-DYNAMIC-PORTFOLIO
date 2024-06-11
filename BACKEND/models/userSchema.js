@@ -113,7 +113,8 @@ export const getResetPasswordToken = async (userId) => {
 
 // Find User by ID
 export const findUserById = async (id) => {
-  const query = "SELECT * FROM users WHERE id = $1";
+ // const query = "SELECT * FROM users WHERE id = $1";
+ const query = "SELECT id, full_name, email, phone, about_me, avatar_public_id, avatar_url, resume_public_id, resume_url, portfolio_url, github_url, instagram_url, twitter_url, linkedin_url, facebook_url FROM users WHERE id = $1";
   const values = [id];
 
   try {

@@ -86,6 +86,36 @@ export const generateJsonWebToken = (userId) => {
 };
 
 // Get Reset Password Token
+// export const getResetPasswordToken = async (userId) => {
+//   const resetToken = crypto.randomBytes(20).toString("hex");
+
+//   const hashedToken = crypto
+//     .createHash("sha256")
+//     .update(resetToken)
+//     .digest("hex");
+
+
+//     // Convert JavaScript timestamp (milliseconds) to PostgreSQL timestamp (seconds)
+//   const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15 minutes from now
+
+//   const query = `
+//     UPDATE users
+//     SET reset_password_token = $1, reset_password_expire = $2
+//     WHERE id = $3
+//     RETURNING *
+//   `;
+  
+//   const values = [hashedToken, new Date(Date.now() + 15 * 60 * 1000), userId];
+
+//   try {
+//     const res = await db.query(query, values);
+//     return resetToken;
+//   } catch (error) {
+//     throw new Error("Failed to set reset password token: " + error.message);
+//   }
+// };
+
+
 export const getResetPasswordToken = async (userId) => {
   const resetToken = crypto.randomBytes(20).toString("hex");
 
@@ -94,6 +124,12 @@ export const getResetPasswordToken = async (userId) => {
     .update(resetToken)
     .digest("hex");
 
+  //  calculate the reset token expiry time
+  const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15 minutes from now
+
+  console.log("Hashed Token:", hashedToken);
+  console.log("Reset Token Expiry:", resetTokenExpiry);
+
   const query = `
     UPDATE users
     SET reset_password_token = $1, reset_password_expire = $2
@@ -101,15 +137,17 @@ export const getResetPasswordToken = async (userId) => {
     RETURNING *
   `;
   
-  const values = [hashedToken, new Date(Date.now() + 15 * 60 * 1000), userId];
+  const values = [hashedToken, resetTokenExpiry, userId];
 
   try {
     const res = await db.query(query, values);
     return resetToken;
   } catch (error) {
+    console.error("Query Error:", error.message);
     throw new Error("Failed to set reset password token: " + error.message);
   }
 };
+
 
 // Find User by ID
 export const findUserById = async (id) => {

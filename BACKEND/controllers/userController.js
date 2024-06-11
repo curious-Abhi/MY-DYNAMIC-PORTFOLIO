@@ -296,10 +296,15 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
     }
 
     const resetToken = crypto.randomBytes(20).toString('hex');
-    const resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+    const resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    const resetPasswordExpire = new Date(Date.now() + 10 * 60 * 1000).toISOString(); // 10 minutes
+
+    console.log("Generated Reset Token:", resetToken);
+    console.log("Hashed Reset Token:", resetPasswordToken);
+    console.log("Reset Password Expire:", resetPasswordExpire);
 
     const updateQuery = "UPDATE users SET reset_password_token = $1, reset_password_expire = $2 WHERE email = $3";
-    await db.query(updateQuery, [resetToken, resetPasswordExpire, user.email]);
+    await db.query(updateQuery, [resetPasswordToken, resetPasswordExpire, user.email]);
 
     const resetPasswordUrl = `${process.env.DASHBOARD_URL}/password/reset/${resetToken}`;
     const message = `Your reset password token is: \n\n${resetPasswordUrl}\n\nIf you did not request this, please ignore it.`;
@@ -316,9 +321,7 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
         message: `Email sent to ${user.email} successfully`,
       });
     } catch (error) {
-      const resetQuery = "UPDATE users SET reset_password_token = $1, reset_password_expire = $2 WHERE email = $3";
-      await db.query(resetQuery, [null, null, user.email]);
-
+      await db.query(updateQuery, [null, null, user.email]);
       return next(new ErrorHandler("Failed to send email: " + error.message, 500));
     }
   } catch (error) {
@@ -326,16 +329,20 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-
-/*
-
-// Reset password
+// Reset Password
 export const resetPassword = catchAsyncErrors(async (req, res, next) => {
   const resetToken = req.params.token;
   const resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
+  // Get current time as ISO string
+  const currentTime = new Date().toISOString();
+
+  console.log("Received Reset Token:", resetToken);
+  console.log("Hashed Reset Token:", resetPasswordToken);
+  console.log("Current Time:", currentTime);
+
   const query = "SELECT * FROM users WHERE reset_password_token = $1 AND reset_password_expire > $2";
-  const values = [resetPasswordToken, Date.now()];
+  const values = [resetPasswordToken, currentTime];
 
   try {
     const result = await db.query(query, values);
@@ -349,6 +356,12 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
       return next(new ErrorHandler("Password and confirm password do not match.", 400));
     }
 
+    // Ensure password is provided
+    if (!req.body.password) {
+      return next(new ErrorHandler("Password is required.", 400));
+    }
+
+    // Hash the new password
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const updateQuery = `
       UPDATE users
@@ -366,4 +379,3 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 
 
-*/

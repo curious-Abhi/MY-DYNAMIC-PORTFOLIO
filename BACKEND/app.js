@@ -7,9 +7,10 @@ import fileUpload from "express-fileupload";
 import { errorMiddleware } from "./middlewares/error.js";
 import messageRoutes from "./routes/messageRouter.js";
 import userRoutes from "./routes/userRouter.js";
-import timelineRouter from "./routes/timeLineRouter.js"
-import softwareApplication from "./routes/softwareApplicationRouter.js"
+import timelineRouter from "./routes/timeLineRouter.js";
+import softwareApplication from "./routes/softwareApplicationRouter.js";
 import skillRouter from "./routes/skillRouter.js";
+import projectRouter from "./routes/projectRouter.js";
 
 
 const app=express();
@@ -45,6 +46,8 @@ app.use('/api/v1/timeline',timelineRouter);
 app.use('/api/v1/softwareapplication',softwareApplication);
 //use skill routes
 app.use('/api/v1/skill',skillRouter);
+//use project routes
+app.use('/api/v1/project',projectRouter);
 
 app.use(errorMiddleware);
 

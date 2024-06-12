@@ -8,6 +8,8 @@ import { errorMiddleware } from "./middlewares/error.js";
 import messageRoutes from "./routes/messageRouter.js";
 import userRoutes from "./routes/userRouter.js";
 import timelineRouter from "./routes/timeLineRouter.js"
+import softwareApplication from "./routes/softwareApplicationRouter.js"
+import skillRouter from "./routes/skillRouter.js";
 
 
 const app=express();
@@ -39,6 +41,10 @@ app.use('/api/v1/message', messageRoutes);
 app.use('/api/v1/user',userRoutes);
 //use timeLine routes
 app.use('/api/v1/timeline',timelineRouter);
+//use software application routes
+app.use('/api/v1/softwareapplication',softwareApplication);
+//use skill routes
+app.use('/api/v1/skill',skillRouter);
 
 app.use(errorMiddleware);
 

@@ -5,12 +5,21 @@ import db from '../database/dbconnection.js';
 // Post a new timeline
 export const postTimeline = catchAsyncErrors(async (req, res, next) => {
   const { title, description, from, to } = req.body;
+
+  // Ensure the `from` and `to` are integers representing the year
+  const fromYear = parseInt(from, 10);
+  const toYear = parseInt(to, 10);
+
+  if (isNaN(fromYear) || isNaN(toYear)) {
+    return next(new ErrorHandler('Invalid year format', 400));
+  }
+
   const query = `
-    INSERT INTO timelines (title, description, from_date, to_date)
+    INSERT INTO timelines (title, description, from_year, to_year)
     VALUES ($1, $2, $3, $4)
     RETURNING *;
   `;
-  const values = [title, description, from, to];
+  const values = [title, description, fromYear, toYear];
 
   try {
     const result = await db.query(query, values);

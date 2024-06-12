@@ -5,7 +5,12 @@ import { isAuthenticated } from "../middlewares/auth.js";
 const router = express.Router();
 
 // Route to post a new timeline
-router.post('/add',isAuthenticated, postTimeline);
+// router.post('/add',isAuthenticated, postTimeline);
+
+router.post('/add', (req, res, next) => {
+    console.log('Request body:', req.body);
+    next();
+  }, isAuthenticated, postTimeline);
 
 // Route to delete a timeline by ID
 router.delete('/delete/:id', isAuthenticated,deleteTimeline);

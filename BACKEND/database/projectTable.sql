@@ -6,7 +6,7 @@ CREATE TABLE projects (
   project_link TEXT NOT NULL,
   stack TEXT[] NOT NULL,
   technologies TEXT[] NOT NULL,
-  deployed BOOLEAN NOT NULL,
+  deployed TEXT NOT NULL,
   project_banner_public_id VARCHAR(255),
   project_banner_url TEXT
 );

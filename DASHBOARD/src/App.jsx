@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,7 +11,15 @@ import ManageProjects from "./pages/ManageProjects";
 import UpdateProject from "./pages/UpdateProject";
 import ManageTimeline from "./pages/ManageTimeline";
 import ViewProject from "./pages/ViewProject";
+import { useDispatch } from "react-redux";
+import { getUser } from "./store/slices/userSlice";
 const App = () => {
+
+  const dispatch=useDispatch();
+
+  useEffect(()=>{
+   dispatch(getUser());
+  },[])
   return (
     <Router>
       <Routes>

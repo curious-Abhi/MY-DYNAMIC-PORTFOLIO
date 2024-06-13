@@ -11,7 +11,7 @@ const userSlice = createSlice({
     isUpdated: false,
   },
   reducers: {
-    loginRequest(state, action) {
+    loginRequest(state) {
       state.loading = true;
       state.isAuthenticated = false;
       state.user = {};
@@ -29,18 +29,73 @@ const userSlice = createSlice({
       state.user = {};
       state.error = action.payload;
     },
+    loadUserRequest(state) {
+      state.loading = true;
+      state.isAuthenticated = false;
+      state.user = {};
+      state.error = null;
+    },
+    loadUserSuccess(state, action) {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.user = action.payload;
+      state.error = null;
+    },
+    loadUserFailed(state, action) {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = {};
+      state.error = action.payload;
+    },
+    logoutSuccess(state, action) {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = {};
+      state.error = null;
+    },
+    logoutFailed(state, action) {
+      state.loading = false;
+      state.isAuthenticated = state.isAuthenticated;
+      state.user = state.user;
+      state.error = action.payload;
+    },
+    clearAllErrors(state) {
+      state.error = null;
+    },
   },
 });
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (credentials) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
     const { data } = await axios.post(
-      "",
-      { email, password },
+      "http://localhost:4000/api/v1/user/login",
+      credentials,
       { withCredentials: true, headers: { "Content-Type": "application/json" } }
     );
     dispatch(userSlice.actions.loginSuccess(data.user));
-    dispatch
-  } catch (error) {}
+  } catch (error) {
+    dispatch(userSlice.actions.loginFailed(error.response.data.message));
+  }
 };
+
+export const getUser = () => async (dispatch) => {
+  dispatch(userSlice.actions.loadUserRequest());
+  try {
+    const { data } = await axios.get(
+      "http://localhost:4000/api/v1/user/me",
+      { withCredentials: true }
+    );
+    dispatch(userSlice.actions.loadUserSuccess(data.user));
+    dispatch(userSlice.actions.clearAllErrors());
+  } catch (error) {
+    dispatch(userSlice.actions.loadUserFailed(error.response.data.message));
+  }
+};
+
+export const clearAllUsersErrors = () => (dispatch) => {
+  dispatch(userSlice.actions.clearAllErrors());
+};
+
+export default userSlice.reducer;
+

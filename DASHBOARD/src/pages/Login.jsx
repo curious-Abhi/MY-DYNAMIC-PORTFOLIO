@@ -7,12 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { clearAllUsersErrors, login } from "@/store/slices/userSlice";
+import SpecialLoadingButton from "./subcomponents/SpecialLoadingButton";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { loading, isAuthenticated, error } = useSelector((state) => state.user);
+  const { loading, isAuthenticated, error } = useSelector(
+    (state) => state.user
+  );
 
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
@@ -70,9 +73,13 @@ const Login = () => {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" onClick={handleLogin}>
-              Login
-            </Button>
+            {loading ? (
+              <SpecialLoadingButton content={"Logging In"} />
+            ) : (
+              <Button type="submit" className="w-full" onClick={handleLogin}>
+                Login
+              </Button>
+            )}
           </div>
         </div>
       </div>

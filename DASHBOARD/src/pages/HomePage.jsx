@@ -1,3 +1,31 @@
+import React from 'react'
+
+const HomePage = () => {
+  return (
+    <>
+    
+    </>
+  )
+}
+
+export default HomePage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -30,3 +58,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+*/

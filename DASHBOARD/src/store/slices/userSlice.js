@@ -60,6 +60,43 @@ const userSlice = createSlice({
       state.user = state.user;
       state.error = action.payload;
     },
+    updatePasswordRequest(state,action){
+      state.loading=true;
+      state.isUpdated=false;
+      state.message=null;
+      state.error=null
+    },
+    updatePasswordSuccess(state,action){
+      state.loading=false;
+      state.isUpdated=true;
+      state.message=action.payload;
+      state.error=null
+    },
+    updatePasswordFailed(state,action){
+      state.loading=false;
+      state.isUpdated=false;
+      state.message=null;
+      state.error=action.payload
+    },
+    updateProfileRequest(state,action){
+      state.loading=true;
+      state.isUpdated=false;
+      state.message=null;
+      state.error=null
+    },
+    updateProfileSuccess(state,action){
+      state.loading=false;
+      state.isUpdated=true;
+      state.message=action.payload;
+      state.error=null
+    },
+    updateProfileFailed(state,action){
+      state.loading=false;
+      state.isUpdated=false;
+      state.message=null;
+      state.error=action.payload
+    },
+
     clearAllErrors(state) {
       state.error = null;
     },
@@ -106,6 +143,8 @@ export const logout = () => async (dispatch) => {
     dispatch(userSlice.actions.logoutFailed(error.response.data.message));
   }
 };
+
+
 
 export const clearAllUsersErrors = () => (dispatch) => {
   dispatch(userSlice.actions.clearAllErrors());

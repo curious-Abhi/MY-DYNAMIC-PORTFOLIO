@@ -1,33 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const userSlice = createSlice({
-  name: "user",
+const forgotResetPassSlice = createSlice({
+  name: "forgotPassword",
   initialState: {
     loading: false,
-    user: {},
-    isAuthenticated: false,
     error: null,
-    isUpdated: false,
   },
   reducers: {
-    loginRequest(state) {
+    forgotPasswordRequest(state) {
       state.loading = true;
-      state.isAuthenticated = false;
-      state.user = {};
       state.error = null;
+      state.message=null;
     },
-    loginSuccess(state, action) {
-      state.loading = false;
-      state.isAuthenticated = true;
-      state.user = action.payload;
-      state.error = null;
+    forgotPasswordSuccess(state, action) {
+        state.loading = false;
+        state.error = null;
+        state.message=null;
     },
-    loginFailed(state, action) {
-      state.loading = false;
-      state.isAuthenticated = false;
-      state.user = {};
-      state.error = action.payload;
+    forgotPasswordFailed(state, action) {
+        state.loading = true;
+        state.error = null;
+        state.message=null;
     },
     loadUserRequest(state) {
       state.loading = true;
@@ -45,55 +39,6 @@ const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = false;
       state.user = {};
-      state.error = action.payload;
-    },
-    logoutSuccess(state, action) {
-      state.loading = false;
-      state.isAuthenticated = false;
-      state.user = {};
-      state.error = null;
-      state.message = action.payload;
-    },
-    logoutFailed(state, action) {
-      state.loading = false;
-      state.isAuthenticated = state.isAuthenticated;
-      state.user = state.user;
-      state.error = action.payload;
-    },
-    updatePasswordRequest(state, action) {
-      state.loading = true;
-      state.isUpdated = false;
-      state.message = null;
-      state.error = null;
-    },
-    updatePasswordSuccess(state, action) {
-      state.loading = false;
-      state.isUpdated = true;
-      state.message = action.payload;
-      state.error = null;
-    },
-    updatePasswordFailed(state, action) {
-      state.loading = false;
-      state.isUpdated = false;
-      state.message = null;
-      state.error = action.payload;
-    },
-    updateProfileRequest(state, action) {
-      state.loading = true;
-      state.isUpdated = false;
-      state.message = null;
-      state.error = null;
-    },
-    updateProfileSuccess(state, action) {
-      state.loading = false;
-      state.isUpdated = true;
-      state.message = action.payload;
-      state.error = null;
-    },
-    updateProfileFailed(state, action) {
-      state.loading = false;
-      state.isUpdated = false;
-      state.message = null;
       state.error = action.payload;
     },
     updateProfileResetAfterUpdate(state, action) {

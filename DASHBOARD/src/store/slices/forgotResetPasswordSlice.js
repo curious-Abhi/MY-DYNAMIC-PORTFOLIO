@@ -16,39 +16,32 @@ const forgotResetPassSlice = createSlice({
     forgotPasswordSuccess(state, action) {
         state.loading = false;
         state.error = null;
-        state.message=null;
+        state.message=action.payload;
     },
     forgotPasswordFailed(state, action) {
-        state.loading = true;
-        state.error = null;
+        state.loading = false;
+        state.error =action.payload;
         state.message=null;
     },
-    loadUserRequest(state) {
+    resetPasswordRequest(state) {
       state.loading = true;
-      state.isAuthenticated = false;
-      state.user = {};
       state.error = null;
+      state.message=null;
     },
-    loadUserSuccess(state, action) {
-      state.loading = false;
-      state.isAuthenticated = true;
-      state.user = action.payload;
-      state.error = null;
+    resetPasswordSuccess(state, action) {
+        state.loading = false;
+        state.error = null;
+        state.message=action.payload;
     },
-    loadUserFailed(state, action) {
-      state.loading = false;
-      state.isAuthenticated = false;
-      state.user = {};
-      state.error = action.payload;
-    },
-    updateProfileResetAfterUpdate(state, action) {
-      state.error = null;
-      state.message = null;
-      state.isUpdated = false;
+    resetPasswordFailed(state, action) {
+        state.loading = false;
+        state.error =action.payload;
+        state.message=null;
     },
 
     clearAllErrors(state) {
       state.error = null;
+      state=state
     },
   },
 });

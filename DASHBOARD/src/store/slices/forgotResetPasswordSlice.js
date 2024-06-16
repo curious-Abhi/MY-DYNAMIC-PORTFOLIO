@@ -41,7 +41,7 @@ const forgotResetPassSlice = createSlice({
 
     clearAllErrors(state) {
       state.error = null;
-      state=state
+      state=state;
     },
   },
 });

@@ -25,7 +25,7 @@ const forgotResetPassSlice = createSlice({
     },
     resetPasswordRequest(state) {
       state.loading = true;
-      state.error = null;
+      state.error = null
       state.message=null;
     },
     resetPasswordSuccess(state, action) {

@@ -1,4 +1,4 @@
 # MY-DYNAMIC-PORTFOLIO
 
 Still creating 
-working
+working on frontend 

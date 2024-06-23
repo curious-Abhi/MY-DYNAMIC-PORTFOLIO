@@ -2,4 +2,4 @@
 
 Still creating 
 working on frontend 
-react
+react sometimes can't able to cide

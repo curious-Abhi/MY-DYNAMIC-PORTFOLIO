@@ -96,7 +96,7 @@ export const resetPassword =(token, password, confirmPassword) => async (dispatc
   };
 
 export const clearAllForgotPasswordErrors = () => (dispatch) => {
-  dispatch(userSlice.actions.clearAllErrors());
+  dispatch(forgotResetPassSlice.actions.clearAllErrors());
 };
 
 export default forgotResetPassSlice.reducer;

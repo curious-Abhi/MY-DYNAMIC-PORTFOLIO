@@ -7,9 +7,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import SpecialLoadingButton from "./subcomponents/SpecialLoadingButton";
+import { getUser } from "@/store/slices/userSlice";
+
 
 const ForgotPassword = () => {
-  const [email,SetEmail]=useState("")
+  const [email,setEmail]=useState("")
   const {loading,error,message}=useSelector((state)=>state.forgotPassword);
   const {isAuthenticated}=useSelector((state)=>state.user);
   const dispatch =useDispatch();
@@ -29,6 +32,7 @@ const ForgotPassword = () => {
   }
   if(message!==null){
     toast.success(message);
+    dispatch(getUser());
   }
   },[dispatch,isAuthenticated,error,loading])
 

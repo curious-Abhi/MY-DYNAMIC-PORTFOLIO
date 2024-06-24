@@ -6,132 +6,97 @@ const forgotResetPassSlice = createSlice({
   initialState: {
     loading: false,
     error: null,
+    message: null,
   },
   reducers: {
     forgotPasswordRequest(state) {
       state.loading = true;
       state.error = null;
-      state.message=null;
+      state.message = null;
     },
     forgotPasswordSuccess(state, action) {
-        state.loading = false;
-        state.error = null;
-        state.message=action.payload;
+      state.loading = false;
+      state.error = null;
+      state.message = action.payload;
     },
     forgotPasswordFailed(state, action) {
-        state.loading = false;
-        state.error =action.payload;
-        state.message=null;
+      state.loading = false;
+      state.error = action.payload;
+      state.message = null;
     },
     resetPasswordRequest(state) {
       state.loading = true;
-      state.error = null
-      state.message=null;
+      state.error = null;
+      state.message = null;
     },
     resetPasswordSuccess(state, action) {
-        state.loading = false;
-        state.error = null;
-        state.message=action.payload;
+      state.loading = false;
+      state.error = null;
+      state.message = action.payload;
     },
     resetPasswordFailed(state, action) {
-        state.loading = false;
-        state.error =action.payload;
-        state.message=null;
+      state.loading = false;
+      state.error = action.payload;
+      state.message = null;
     },
 
     clearAllErrors(state) {
       state.error = null;
-      state=state
+      state = state;
     },
   },
 });
 
-export const login = (credentials) => async (dispatch) => {
-  dispatch(userSlice.actions.loginRequest());
+export const forgotPassword = (email) => async (dispatch) => {
   try {
-    const { data } = await axios.post(
-      "http://localhost:4000/api/v1/user/login",
-      credentials,
+    dispatch(forgotResetPassSlice.actions.forgotPasswordRequest());
+    console.log(email);
+    const response = await axios.post(
+      "http://localhost:4000/api/v1/user/password/forgot",
+      { email },
       { withCredentials: true, headers: { "Content-Type": "application/json" } }
     );
-    dispatch(userSlice.actions.loginSuccess(data.user));
-  } catch (error) {
-    dispatch(userSlice.actions.loginFailed(error.response.data.message));
-  }
-};
-
-export const getUser = () => async (dispatch) => {
-  dispatch(userSlice.actions.loadUserRequest());
-  try {
-    const { data } = await axios.get("http://localhost:4000/api/v1/user/me", {
-      withCredentials: true,
-    });
-    dispatch(userSlice.actions.loadUserSuccess(data.user));
-    dispatch(userSlice.actions.clearAllErrors());
-  } catch (error) {
-    dispatch(userSlice.actions.loadUserFailed(error.response.data.message));
-  }
-};
-export const logout = () => async (dispatch) => {
-  dispatch(userSlice.actions.loadUserRequest());
-  try {
-    const { data } = await axios.get(
-      "http://localhost:4000/api/v1/user/logout",
-      { withCredentials: true }
+    console.log(response);
+    dispatch(
+      forgotResetPassSlice.actions.forgotPasswordSuccess(response.data.message)
     );
-    dispatch(userSlice.actions.logoutSuccess(data.message));
-    dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.logoutFailed(error.response.data.message));
+    console.log(error);
+    dispatch(
+      forgotResetPassSlice.actions.forgotPasswordFailed(
+        error.response.data.message
+      )
+    );
   }
 };
 
-export const updatePassword = ( currentPassword, newPassword, confirmNewPassword) => async (dispatch) => {
-    dispatch(userSlice.actions.updatePasswordRequest());
+export const resetPassword =(token, password, confirmPassword) => async (dispatch) => {
     try {
-      const { data } = await axios.put(
-        "http://localhost:4000/api/v1/user/password/update",
-        { currentPassword, newPassword, confirmNewPassword },
+      dispatch(forgotResetPassSlice.actions.resetPasswordRequest());
+      const response = await axios.put(
+        ` http://localhost:4000/api/v1/user/password/reset/${token}`,
+        { password, confirmPassword },
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
         }
       );
-      dispatch(userSlice.actions.updatePasswordSuccess(data.message));
-      dispatch(userSlice.actions.clearAllErrors());
-    } catch (error) {
+      console.log(response);
       dispatch(
-        userSlice.actions.updatePasswordFailed(error.response.data.message)
+        forgotResetPassSlice.actions.resetPasswordSuccess(response.data.message)
       );
-    }
-  };
-export const updateProfile = ( data) => async (dispatch) => {
-    dispatch(userSlice.actions.updateProfileRequest());
-    try {
-      const { data } = await axios.put(
-        "http://localhost:4000/api/v1/user/me/profile/update",
-        data,
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      dispatch(userSlice.actions.updateProfileSuccess(data.message));
-      dispatch(userSlice.actions.clearAllErrors());
     } catch (error) {
+      console.log(error);
       dispatch(
-        userSlice.actions.updateProfileFailed(error.response.data.message)
+        forgotResetPassSlice.actions.resetPasswordFailed(
+          error.response.data.message
+        )
       );
     }
   };
 
-
-  export const resetProfile=()=>(dispatch)=>{
-    dispatch(userSlice.actions.updateProfileResetAfterUpdate())
-  }
-
-export const clearAllUsersErrors = () => (dispatch) => {
+export const clearAllForgotPasswordErrors = () => (dispatch) => {
   dispatch(userSlice.actions.clearAllErrors());
 };
 
-export default userSlice.reducer;
+export default forgotResetPassSlice.reducer;

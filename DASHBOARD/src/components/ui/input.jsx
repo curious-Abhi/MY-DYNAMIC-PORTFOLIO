@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 const Input = React.forwardRef(({ className, type, defaultValue, value, ...props }, ref) => {
   // Determine the value to use based on defaultValue or value prop
-  const inputValue = value !== undefined ? value : defaultValue !== undefined ? defaultValue : "";
+  const inputValue = value !== null && value !== undefined ? value : defaultValue !== null && defaultValue !== undefined ? defaultValue : "";
 
   return (
     <input

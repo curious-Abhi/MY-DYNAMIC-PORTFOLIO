@@ -23,25 +23,25 @@ const Profile = () => {
                 <div className="grid gap-2 w-full sm:w-72">
                   <Label>Profile Image</Label>
                   <img
-                    src={user && user.avatar && user.avatar.url}
+                    src={user && user.avatar_url}
                     alt="avatar"
                     className="w-full h-auto sm:w-72 sm:h-72 rounded-2xl"
                   />
                 </div>
                 <div className="grid gap-2 w-full sm:w-72">
                   <Label>Resume</Label>
-                  <Link to={user && user.resume && user.resume.url} target="_blank">
+                  <Link to={user && user.resume_url} target="_blank">
                     <img
-                      src={user && user.resume && user.resume.url}
-                      alt="avatar"
-                      className="w-full  h-auto sm:w-72 sm:h-72 rounded-2xl"
+                      src={user && user.resume_url}
+                      alt="resume"
+                      className="w-full h-auto sm:w-72 sm:h-72 rounded-2xl"
                     />
                   </Link>
                 </div>
               </div>
               <div className="grid gap-2">
                 <Label>Full Name</Label>
-                <Input type="text" defaultValue={user.fullName} disabled />
+                <Input type="text" defaultValue={user.full_name} disabled />
               </div>
               <div className="grid gap-2">
                 <Label>Email</Label>
@@ -53,31 +53,31 @@ const Profile = () => {
               </div>
               <div className="grid gap-2">
                 <Label>About Me</Label>
-                <Textarea defaultValue={user.aboutMe} disabled />
+                <Textarea defaultValue={user.about_me} disabled />
               </div>
               <div className="grid gap-2">
                 <Label>Portfolio URL</Label>
-                <Input type="text" defaultValue={user.portfolioURL} disabled />
+                <Input type="text" defaultValue={user.portfolio_url} disabled />
               </div>
               <div className="grid gap-2">
                 <Label>Github URL</Label>
-                <Input type="text" defaultValue={user.githubURL} disabled />
+                <Input type="text" defaultValue={user.github_url} disabled />
               </div>
               <div className="grid gap-2">
                 <Label>LinkedIn URL</Label>
-                <Input type="text" defaultValue={user.linkedInURL} disabled />
+                <Input type="text" defaultValue={user.linkedin_url} disabled />
               </div>
               <div className="grid gap-2">
                 <Label>Instagram URL</Label>
-                <Input type="text" defaultValue={user.instagramURL} disabled />
+                <Input type="text" defaultValue={user.instagram_url} disabled />
               </div>
               <div className="grid gap-2">
                 <Label>Twitter(X) URL</Label>
-                <Input type="text" defaultValue={user.twitterURL} disabled />
+                <Input type="text" defaultValue={user.twitter_url} disabled />
               </div>
               <div className="grid gap-2">
                 <Label>Facebook URL</Label>
-                <Input type="text" defaultValue={user.facebookURL} disabled />
+                <Input type="text" defaultValue={user.facebook_url} disabled />
               </div>
             </div>
           </div>

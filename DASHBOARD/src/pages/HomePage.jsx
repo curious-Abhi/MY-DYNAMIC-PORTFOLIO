@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { FolderGit, History, Home, LayoutGrid, LogOut, MessageSquareMore, Package2, PencilRuler } from "lucide-react";
+import { FolderGit, History, Home, LayoutGrid, LogOut, MessageSquareMore, Package2, PencilRuler,User,PanelLeft } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -12,6 +12,12 @@ import {
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import Dashboard from "./subcomponents/Dashboard";
+import AddSkill from "./subcomponents/AddSkill";
+import AddProject from "./subcomponents/AddProject";
+import AddSoftwareApplications from "./subcomponents/AddSoftwareApplications";
+import Account from "./subcomponents/Account";
 
 const HomePage = () => {
   const { active, setActive } = useState("");
@@ -37,7 +43,7 @@ const HomePage = () => {
         <aside className="fixed inset-y-0 left-0 hidden w-14 flex-col border-r bg-background sm:flex z-50">
           <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
             <Link className="group flex h-p w-p shrink-0 items-center justify-center gap-2 rounded-full ">
-              <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
+              <Package2 className="h-6 w-6 transition-all group-hover:scale-110" />
               <span className="sr-only">Acme Inc</span>
             </Link>
             <TooltipProvider>
@@ -251,7 +257,7 @@ const HomePage = () => {
                   onClick={() => setActive("Add Uses")}
                 >
                   <LayoutGrid className="h-5 w-5" />
-                  Add Uses
+                  Add Application
                 </Link>
                 <Link
                   className={`flex items-center gap-4 px-2.5 ${

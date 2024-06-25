@@ -4,13 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { FolderGit, History, Home, LayoutGrid, LogOut, MessageSquareMore, Package2, PencilRuler,User,PanelLeft } from "lucide-react";
+import {
+  FolderGit,
+  History,
+  Home,
+  LayoutGrid,
+  LogOut,
+  MessageSquareMore,
+  Package2,
+  PencilRuler,
+  User,
+  PanelLeft,
+} from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@radix-ui/react-tooltip";
+} from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Dashboard from "./subcomponents/Dashboard";
@@ -18,9 +29,11 @@ import AddSkill from "./subcomponents/AddSkill";
 import AddProject from "./subcomponents/AddProject";
 import AddSoftwareApplications from "./subcomponents/AddSoftwareApplications";
 import Account from "./subcomponents/Account";
+import Messages from "./subcomponents/Messages";
+import AddTimeline from "./subcomponents/AddTimeline";
 
 const HomePage = () => {
-  const { active, setActive } = useState("");
+  const { active, setActive } = useState("Dashboard");
   const { isAuthenticated, error, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -307,12 +320,12 @@ const HomePage = () => {
 
           <div className="flex items-center gap-4 md:grow-0 sm:ml-16 sm:mt-5">
             <img
-              src={user && user.avatar && user.avatar.url}
+              src={user && user.avatar_url}
               alt="avatar"
               className="w-20 h-20 rounded-full max-[900px]:hidden"
             />
             <h1 className="text-4xl max-[900px]:text-2xl">
-              Welcome back, {user.fullName}
+              Welcome back, {user.full_name}
             </h1>
           </div>
         </header>

@@ -341,7 +341,7 @@ const HomePage = () => {
             case "Add Skill":
               return <AddSkill />;
               break;
-            case "Add Uses":
+            case "Add Application":
               return <AddSoftwareApplications />;
               break;
             case "Add Timeline":

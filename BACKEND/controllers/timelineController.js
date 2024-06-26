@@ -4,22 +4,36 @@ import db from '../database/dbconnection.js';
 
 // Post a new timeline
 export const postTimeline = catchAsyncErrors(async (req, res, next) => {
-  const { title, description, from, to } = req.body;
+  const { title, description, from_year, to_year } = req.body;
 
-  // Ensure the `from` and `to` are integers representing the year
-  const fromYear = parseInt(from, 10);
-  const toYear = parseInt(to, 10);
+  //console.log("Received data:", { title, description, from, to });
 
-  if (isNaN(fromYear) || isNaN(toYear)) {
-    return next(new ErrorHandler('Invalid year format', 400));
+ 
+
+  if (!title || !description) {
+    return next(new ErrorHandler('Title and description are required', 400));
   }
+
+  //  // Ensure the `from` and `to` are integers representing the year
+  //  const from_year = parseInt(from, 10);
+  //  const to_year = parseInt(to, 10);
+ 
+  //  //console.log("Parsed years:", { from_year, to_year });
+ 
+  //  if (isNaN(from_year) || isNaN(to_year)) {
+  //    return next(new ErrorHandler('Invalid year format', 400));
+  //  }
+ 
+   if (from_year > to_year) {
+     return next(new ErrorHandler('The starting year cannot be greater than the ending year', 400));
+   }
 
   const query = `
     INSERT INTO timelines (title, description, from_year, to_year)
     VALUES ($1, $2, $3, $4)
     RETURNING *;
   `;
-  const values = [title, description, fromYear, toYear];
+  const values = [title, description, from_year, to_year];
 
   try {
     const result = await db.query(query, values);
@@ -33,7 +47,6 @@ export const postTimeline = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('Failed to add timeline: ' + error.message, 500));
   }
 });
-
 // Delete a timeline
 export const deleteTimeline = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;

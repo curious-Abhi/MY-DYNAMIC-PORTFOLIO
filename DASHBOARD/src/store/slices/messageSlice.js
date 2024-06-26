@@ -75,7 +75,7 @@ export const deleteMessage = (id) => async (dispatch) => {
   dispatch(messageSlice.actions.deleteMessageRequest());
   try {
     const response = await axios.delete(
-      `https://mern-stack-portfolio-backend-code.onrender.com/api/v1/message/delete/${id}`,
+      `http://localhost:4000/api/v1/message/delete/${id}`,
       {
         withCredentials: true,
       }

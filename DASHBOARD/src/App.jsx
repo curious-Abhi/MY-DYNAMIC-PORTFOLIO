@@ -14,6 +14,7 @@ import ViewProject from "./pages/ViewProject";
 import { useDispatch } from "react-redux";
 import { getUser } from "./store/slices/userSlice";
 import { getAllMessages } from "./store/slices/messageSlice";
+import { getAllTimeline } from "./store/slices/timelineSlice";
 const App = () => {
 
   const dispatch=useDispatch();
@@ -21,6 +22,7 @@ const App = () => {
   useEffect(()=>{
    dispatch(getUser());
    dispatch(getAllMessages());
+   dispatch(getAllTimeline());
   },[])
   return (
     <Router>

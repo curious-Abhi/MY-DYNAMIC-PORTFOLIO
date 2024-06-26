@@ -3,7 +3,7 @@ CREATE TABLE projects (
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   git_repo_link TEXT NOT NULL,
-  project_link TEXT NOT NULL,
+  project_link TEXT ,
   stack TEXT[] NOT NULL,
   technologies TEXT[] NOT NULL,
   deployed TEXT NOT NULL,

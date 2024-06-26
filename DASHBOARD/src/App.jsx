@@ -15,6 +15,8 @@ import { useDispatch } from "react-redux";
 import { getUser } from "./store/slices/userSlice";
 import { getAllMessages } from "./store/slices/messageSlice";
 import { getAllTimeline } from "./store/slices/timelineSlice";
+import { getAllSoftwareApplications } from "./store/slices/softwareApplicationSlice";
+import { getAllProjects } from "./store/slices/projectSlice";
 const App = () => {
 
   const dispatch=useDispatch();
@@ -23,6 +25,8 @@ const App = () => {
    dispatch(getUser());
    dispatch(getAllMessages());
    dispatch(getAllTimeline());
+   dispatch(getAllSoftwareApplications());
+   dispatch(getAllProjects())
   },[])
   return (
     <Router>

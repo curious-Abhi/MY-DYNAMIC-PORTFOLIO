@@ -137,16 +137,16 @@ export const getUser = catchAsyncErrors(async (req, res, next) => {
 // Update user profile
 export const updateProfile = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
-    fullName: req.body.fullName,
+    full_name: req.body.full_name,
     email: req.body.email,
     phone: req.body.phone,
-    aboutMe: req.body.aboutMe,
-    githubURL: req.body.githubURL,
-    instagramURL: req.body.instagramURL,
-    portfolioURL: req.body.portfolioURL,
-    facebookURL: req.body.facebookURL,
-    twitterURL: req.body.twitterURL,
-    linkedInURL: req.body.linkedInURL,
+    about_me: req.body.about_me,
+    github_url: req.body.github_url,
+    instagram_url: req.body.instagram_url,
+    portfolio_url: req.body.portfolio_url,
+    facebook_url: req.body.facebook_url,
+    twitter_url: req.body.twitter_url,
+    linkedin_url: req.body.linkedin_url,
   };
 
   if (req.files && req.files.avatar) {
@@ -190,9 +190,9 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
   `;
 
   const updateValues = [
-    newUserData.fullName, newUserData.email, newUserData.phone, newUserData.aboutMe,
-    newUserData.githubURL, newUserData.instagramURL, newUserData.portfolioURL,
-    newUserData.facebookURL, newUserData.twitterURL, newUserData.linkedInURL,
+    newUserData.full_name, newUserData.email, newUserData.phone, newUserData.about_me,
+    newUserData.github_url, newUserData.instagram_url, newUserData.portfolio_url,
+    newUserData.facebook_url, newUserData.twitter_url, newUserData.linkedin_url,
     newUserData.avatar_public_id, newUserData.avatar_url,
     newUserData.resume_public_id, newUserData.resume_url, req.user.id
   ];
@@ -210,6 +210,7 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Failed to update profile: " + error.message, 500));
   }
 });
+
 
 // Update user password
 export const updatePassword = catchAsyncErrors(async (req, res, next) => {

@@ -111,11 +111,15 @@ const UpdateProfile = () => {
               <div className="flex items-start lg:justify-between lg:items-center flex-col lg:flex-row gap-5">
                 <div className="grid gap-2 w-full sm:w-72">
                   <Label>Profile Image</Label>
+                  <Link
+                    to={user && user.avatar && user._url}
+                    target="_blank"
+                  >
                   <img
                     src={avatarPreview ? avatarPreview : "/avatarHolder.jpg"}
                     alt="avatar"
                     className="w-full h-auto sm:w-72 sm:h-72 rounded-2xl"
-                  />
+                  /></Link>
                   <div className="relative">
                     <input
                       type="file"

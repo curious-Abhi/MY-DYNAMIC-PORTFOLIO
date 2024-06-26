@@ -13,12 +13,14 @@ import ManageTimeline from "./pages/ManageTimeline";
 import ViewProject from "./pages/ViewProject";
 import { useDispatch } from "react-redux";
 import { getUser } from "./store/slices/userSlice";
+import { getAllMessages } from "./store/slices/messageSlice";
 const App = () => {
 
   const dispatch=useDispatch();
 
   useEffect(()=>{
    dispatch(getUser());
+   dispatch(getAllMessages());
   },[])
   return (
     <Router>

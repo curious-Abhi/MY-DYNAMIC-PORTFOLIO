@@ -99,20 +99,20 @@ export const getAllSkills = () => async (dispatch) => {
   }
 };
 
-export const addNewSkill = (data) => async (dispatch) => {
+export const addNewSkill = (formData) => async (dispatch) => {
   dispatch(skillSlice.actions.addNewSkillRequest());
   try {
-    const response = await axios.post(
+    const {data}= await axios.post(
       "http://localhost:4000/api/v1/skill/add",
-      data,
+      formData,
       {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
-    console.log(response);
-    console.log(response.data.message);
-    dispatch(skillSlice.actions.addNewSkillSuccess(response.data.message));
+    //console.log(response);
+    //console.log(response.data.message);
+    dispatch(skillSlice.actions.addNewSkillSuccess(data.message));
     dispatch(skillSlice.actions.clearAllErrors());
   } catch (error) {
     dispatch(skillSlice.actions.addNewSkillFailed(error.response.data.message));

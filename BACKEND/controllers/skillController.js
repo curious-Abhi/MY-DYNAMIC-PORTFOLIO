@@ -94,9 +94,26 @@ export const updateSkill = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
   const { proficiency } = req.body;
 
+  // Ensure id is a string and proficiency is defined
+  console.log('Converted Skill ID:', id);
+  console.log('Type of Converted Skill ID:', typeof id);
+  console.log('Converted proficiency:', proficiency);
+  console.log('Type of proficiency:', typeof proficiency);
+
+  // Convert skillId to integer if necessary
+  const skillId = parseInt(id, 10);
+
+  // Check if proficiency is undefined or not a valid number
+  if (isNaN(skillId)) {
+    return next(new ErrorHandler("Invalid skill ID", 400));
+  }
+  if (proficiency === undefined || isNaN(proficiency)) {
+    return next(new ErrorHandler("Invalid proficiency value", 400));
+  }
+
   try {
     const findQuery = 'SELECT * FROM skills WHERE id = $1';
-    const values = [id];
+    const values = [skillId];
 
     const result = await db.query(findQuery, values);
     let skill = result.rows[0];
@@ -111,7 +128,7 @@ export const updateSkill = catchAsyncErrors(async (req, res, next) => {
       WHERE id = $2
       RETURNING *;
     `;
-    const updateValues = [proficiency, id];
+    const updateValues = [proficiency, skillId];
 
     const updateResult = await db.query(updateQuery, updateValues);
     skill = updateResult.rows[0];
@@ -125,6 +142,8 @@ export const updateSkill = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Failed to update skill: " + error.message, 500));
   }
 });
+
+
 
 // Get all skills
 export const getAllSkills = catchAsyncErrors(async (req, res, next) => {

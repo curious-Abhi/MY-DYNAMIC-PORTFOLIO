@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -8,23 +8,23 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-import { Trash2 } from "lucide-react";
+} from '@/components/ui/table';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { Trash2 } from 'lucide-react';
 import {
   clearAllTimelineErrors,
   deleteTimeline,
   getAllTimeline,
   resetTimelineSlice,
-} from "@/store/slices/timelineSlice";
+} from '@/store/slices/timelineSlice';
 
 const ManageTimeline = () => {
   const navigateTo = useNavigate();
   const handleReturnToDashboard = () => {
-    navigateTo("/");
+    navigateTo('/');
   };
   const { loading, timeline, error, message } = useSelector(
     (state) => state.timeline
@@ -74,18 +74,18 @@ const ManageTimeline = () => {
                 <TableBody>
                   {timeline && timeline.length > 0 ? (
                     timeline.map((element) => (
-                      <TableRow className="bg-accent" key={element._id}>
+                      <TableRow className="bg-accent" key={element.id}>
                         <TableCell className="font-medium">{element.title}</TableCell>
                         <TableCell className="md:table-cell">{element.description}</TableCell>
-                        <TableCell className="md:table-cell">{element.timeline?.from}</TableCell>
+                        <TableCell className="md:table-cell">{element.from_year}</TableCell>
                         <TableCell className="md:table-cell">
-                          {element.timeline?.to ? element.timeline.to : "Present"}
+                          {element.to_year ? element.to_year : 'Present'}
                         </TableCell>
                         <TableCell className="flex justify-end">
                           <button
                             className="border-red-600 border-2 rounded-full h-8 w-8 flex 
                               justify-center items-center text-red-600  hover:text-slate-50 hover:bg-red-600"
-                            onClick={() => handleDeleteTimeline(element._id)}
+                            onClick={() => handleDeleteTimeline(element.id)}
                           >
                             <Trash2 className="h-5 w-5" />
                           </button>

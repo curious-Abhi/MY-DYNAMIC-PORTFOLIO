@@ -90,7 +90,7 @@ const Dashboard = () => {
             <Card className="sm:col-span-2">
               <CardHeader className="pb-3">
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  {user?.aboutMe}
+                  {user.aboutMe}
                 </CardDescription>
               </CardHeader>
               <CardFooter>
@@ -101,7 +101,7 @@ const Dashboard = () => {
               <CardHeader className="pb-2">
                 <CardTitle>Projects Completed</CardTitle>
                 <CardTitle className="text-6xl">
-                  {projects?.length}
+                  {projects.length}
                 </CardTitle>
               </CardHeader>
               <CardFooter>
@@ -112,7 +112,7 @@ const Dashboard = () => {
               <CardHeader className="pb-2">
                 <CardTitle>Skills</CardTitle>
                 <CardTitle className="text-6xl">
-                  {skills?.length}
+                  {skills.length}
                 </CardTitle>
               </CardHeader>
               <CardFooter>
@@ -140,7 +140,7 @@ const Dashboard = () => {
                     <TableBody>
                       {projects && projects.length > 0 ? (
                         projects.map((element) => (
-                          <TableRow className="bg-accent"key={Math.random() * 100}>
+                          <TableRow className="bg-accent"key={element.id}>
                             <TableCell>
                               <div className="font-medium">{element.title}</div>
                             </TableCell>
@@ -181,7 +181,7 @@ const Dashboard = () => {
                     {skills && skills.length > 0 ? (
                       skills.map((element) => {
                         return (
-                          <Card key={Math.random() * 1000}>
+                          <Card key={element.id}>
                             <CardHeader>{element.title}</CardHeader>
                             <CardFooter>
                               <Progress value={element.proficiency} />
@@ -214,16 +214,16 @@ const Dashboard = () => {
                     <TableBody>
                       {softwareApplications && softwareApplications.length > 0 ? (
                         softwareApplications.map((element) => (
-                          <TableRow className="bg-accent"  key={Math.random() * 200}>
+                          <TableRow className="bg-accent"  key={element.id}>
                             <TableCell className="font-medium">{element.name}</TableCell>
                             <TableCell className="md:table-cell">
-                              <img className="w-7 h-7" src={element.svg?.url} alt={element.name} />
+                              <img className="w-7 h-7" src={element.svg_url} alt={element.name} />
                             </TableCell>
                             <TableCell className="md:table-cell text-center">
-                              {appLoading && appId === element._id ? (
+                              {appLoading && appId === element.id ? (
                                 <SpecialLoadingButton content="Deleting" width="w-fit" />
                               ) : (
-                                <Button onClick={() => handleDeleteSoftwareApp(element._id)}>Delete</Button>
+                                <Button onClick={() => handleDeleteSoftwareApp(element.id)}>Delete</Button>
                               )}
                             </TableCell>
                           </TableRow>
@@ -254,10 +254,10 @@ const Dashboard = () => {
                     <TableBody>
                       {timeline && timeline.length > 0 ? (
                         timeline.map((element) => (
-                          <TableRow className="bg-accent" key={element._id}>
+                          <TableRow className="bg-accent" key={element.id}>
                             <TableCell className="font-medium">{element.title}</TableCell>
-                            <TableCell className="md:table-cell">{element.timeline?.from}</TableCell>
-                            <TableCell className="md:table-cell text-right">{element.timeline?.to}</TableCell>
+                            <TableCell className="md:table-cell">{element.from_year}</TableCell>
+                            <TableCell className="md:table-cell text-right">{element.to_year}</TableCell>
                           </TableRow>
                         ))
                       ) : (

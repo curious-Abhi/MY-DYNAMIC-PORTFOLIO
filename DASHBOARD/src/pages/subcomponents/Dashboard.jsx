@@ -140,7 +140,7 @@ const Dashboard = () => {
                     <TableBody>
                       {projects && projects.length > 0 ? (
                         projects.map((element) => (
-                          <TableRow className="bg-accent" key={element._id}>
+                          <TableRow className="bg-accent"key={Math.random() * 100}>
                             <TableCell>
                               <div className="font-medium">{element.title}</div>
                             </TableCell>
@@ -172,28 +172,30 @@ const Dashboard = () => {
             </TabsContent>
           </Tabs>
           <Tabs>
-            <TabsContent>
-              <Card>
-                <CardHeader className="px-7">
-                  <CardTitle>Skills</CardTitle>
-                </CardHeader>
-                <CardContent className="grid sm:grid-cols-2 gap-4">
-                  {skills && skills.length > 0 ? (
-                    skills.map((element) => (
-                      <Card key={element._id}>
-                        <CardHeader>{element.title}</CardHeader>
-                        <CardFooter>
-                          <Progress value={element.proficiency} />
-                        </CardFooter>
-                      </Card>
-                    ))
-                  ) : (
-                    <p className="text-3xl">You have not added any skills.</p>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+              <TabsContent>
+                <Card>
+                  <CardHeader className="px-7 gap-3">
+                    <CardTitle>Skills</CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid sm:grid-cols-2 gap-4">
+                    {skills && skills.length > 0 ? (
+                      skills.map((element) => {
+                        return (
+                          <Card key={Math.random() * 1000}>
+                            <CardHeader>{element.title}</CardHeader>
+                            <CardFooter>
+                              <Progress value={element.proficiency} />
+                            </CardFooter>
+                          </Card>
+                        );
+                      })
+                    ) : (
+                      <p className="text-3xl">You have not added any skill.</p>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
           <Tabs>
             <TabsContent className="grid min-[1050px]:grid-cols-2 gap-4">
               <Card>
@@ -212,7 +214,7 @@ const Dashboard = () => {
                     <TableBody>
                       {softwareApplications && softwareApplications.length > 0 ? (
                         softwareApplications.map((element) => (
-                          <TableRow className="bg-accent" key={element._id}>
+                          <TableRow className="bg-accent"  key={Math.random() * 200}>
                             <TableCell className="font-medium">{element.name}</TableCell>
                             <TableCell className="md:table-cell">
                               <img className="w-7 h-7" src={element.svg?.url} alt={element.name} />

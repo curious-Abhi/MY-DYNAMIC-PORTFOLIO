@@ -138,6 +138,7 @@ export const updateSkill = (id, proficiency) => async (dispatch) => {
 };
 
 export const deleteSkill = (id) => async (dispatch) => {
+  console.log("Deleting skill with ID (action):", id);  // Debug log
   dispatch(skillSlice.actions.deleteSkillRequest());
   try {
     const response = await axios.delete(
@@ -152,7 +153,6 @@ export const deleteSkill = (id) => async (dispatch) => {
     dispatch(skillSlice.actions.deleteSkillFailed(error.response.data.message));
   }
 };
-
 export const clearAllSkillErrors = () => (dispatch) => {
   dispatch(skillSlice.actions.clearAllErrors());
 };

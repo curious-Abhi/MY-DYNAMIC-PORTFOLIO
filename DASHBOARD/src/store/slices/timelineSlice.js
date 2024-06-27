@@ -10,7 +10,7 @@ const timelineSlice = createSlice({
     message: null,
   },
   reducers: {
-    getAllTimelineRequest(state, action) {
+    getAllTimelineRequest(state) {
       state.timeline = [];
       state.error = null;
       state.loading = true;
@@ -21,11 +21,10 @@ const timelineSlice = createSlice({
       state.loading = false;
     },
     getAllTimelineFailed(state, action) {
-      state.timeline = state.timeline;
       state.error = action.payload;
       state.loading = false;
     },
-    addNewTimelineRequest(state, action) {
+    addNewTimelineRequest(state) {
       state.loading = true;
       state.error = null;
       state.message = null;
@@ -40,7 +39,7 @@ const timelineSlice = createSlice({
       state.loading = false;
       state.message = null;
     },
-    deleteTimelineRequest(state, action) {
+    deleteTimelineRequest(state) {
       state.loading = true;
       state.error = null;
       state.message = null;
@@ -48,46 +47,55 @@ const timelineSlice = createSlice({
     deleteTimelineSuccess(state, action) {
       state.error = null;
       state.loading = false;
-      state.message = action.payload;
+      state.message = action.payload.message;
+      state.timeline = state.timeline.filter(item => item._id !== action.payload.id);
     },
     deleteTimelineFailed(state, action) {
       state.error = action.payload;
       state.loading = false;
       state.message = null;
     },
-    resetTimelineSlice(state, action) {
+    resetTimelineSlice(state) {
       state.error = null;
-      state.timeline = state.timeline;
       state.message = null;
       state.loading = false;
     },
-    clearAllErrors(state, action) {
+    clearAllErrors(state) {
       state.error = null;
-      state = state.timeline;
     },
   },
 });
 
+export const {
+  getAllTimelineRequest,
+  getAllTimelineSuccess,
+  getAllTimelineFailed,
+  addNewTimelineRequest,
+  addNewTimelineSuccess,
+  addNewTimelineFailed,
+  deleteTimelineRequest,
+  deleteTimelineSuccess,
+  deleteTimelineFailed,
+  resetTimelineSlice,
+  clearAllErrors,
+} = timelineSlice.actions;
+
 export const getAllTimeline = () => async (dispatch) => {
-  dispatch(timelineSlice.actions.getAllTimelineRequest());
+  dispatch(getAllTimelineRequest());
   try {
     const response = await axios.get(
       "http://localhost:4000/api/v1/timeline/getall",
       { withCredentials: true }
     );
-    dispatch(
-      timelineSlice.actions.getAllTimelineSuccess(response.data.timelines)
-    );
-    dispatch(timelineSlice.actions.clearAllErrors());
+    dispatch(getAllTimelineSuccess(response.data.timelines));
+    dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(
-      timelineSlice.actions.getAllTimelineFailed(error.response.data.message)
-    );
+    dispatch(getAllTimelineFailed(error.response.data.message));
   }
 };
 
 export const addNewTimeline = (data) => async (dispatch) => {
-  dispatch(timelineSlice.actions.addNewTimelineRequest());
+  dispatch(addNewTimelineRequest());
   try {
     const response = await axios.post(
       "http://localhost:4000/api/v1/timeline/add",
@@ -97,17 +105,15 @@ export const addNewTimeline = (data) => async (dispatch) => {
         headers: { "Content-Type": "application/json" },
       }
     );
-    dispatch(
-      timelineSlice.actions.addNewTimelineSuccess(response.data.message)
-    );
-    dispatch(timelineSlice.actions.clearAllErrors());
+    dispatch(addNewTimelineSuccess(response.data.message));
+    dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(
-      timelineSlice.actions.addNewTimelineFailed(error.response.data.message)
-    );
+    dispatch(addNewTimelineFailed(error.response.data.message));
   }
 };
+
 export const deleteTimeline = (id) => async (dispatch) => {
+  console.log('Deleting timeline with id:', id); // Add this line for debugging
   dispatch(timelineSlice.actions.deleteTimelineRequest());
   try {
     const response = await axios.delete(
@@ -127,12 +133,13 @@ export const deleteTimeline = (id) => async (dispatch) => {
   }
 };
 
-export const resetTimelineSlice = () => (dispatch) => {
-  dispatch(timelineSlice.actions.resetTimelineSlice());
+
+export const resetTimelineSliceAction = () => (dispatch) => {
+  dispatch(resetTimelineSlice());
 };
 
 export const clearAllTimelineErrors = () => (dispatch) => {
-  dispatch(timelineSlice.actions.clearAllErrors());
+  dispatch(clearAllErrors());
 };
 
 export default timelineSlice.reducer;

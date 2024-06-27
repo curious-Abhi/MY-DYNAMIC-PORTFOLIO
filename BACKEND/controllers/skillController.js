@@ -51,30 +51,43 @@ export const addNewSkill = catchAsyncErrors(async (req, res, next) => {
 export const deleteSkill = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
 
+  console.log('Received ID:', id);  // Debug log
+
+  const skillId = parseInt(id, 10);
+  console.log('Converted Skill ID:', skillId);
+  console.log('Type of Converted Skill ID:', typeof skillId);
+
+  if (isNaN(skillId)) {
+    return next(new ErrorHandler('Invalid Skill ID', 400));
+  }
+
   try {
     const findQuery = 'SELECT * FROM skills WHERE id = $1';
-    const deleteQuery = 'DELETE FROM skills WHERE id = $1 RETURNING *';
-    const values = [id];
-
-    const result = await db.query(findQuery, values);
+    const findValues = [skillId];
+    const result = await db.query(findQuery, findValues);
     const skill = result.rows[0];
 
     if (!skill) {
-      return next(new ErrorHandler("Already Deleted!", 404));
+      return next(new ErrorHandler('Skill not found', 404));
     }
 
     const skillSvgId = skill.svg_public_id;
     await cloudinary.uploader.destroy(skillSvgId);
-    await db.query(deleteQuery, values);
+
+    const deleteQuery = 'DELETE FROM skills WHERE id = $1 RETURNING *';
+    await db.query(deleteQuery, findValues);
 
     res.status(200).json({
       success: true,
-      message: "Skill Deleted!",
+      message: 'Skill Deleted!',
     });
   } catch (error) {
-    return next(new ErrorHandler("Failed to delete skill: " + error.message, 500));
+    return next(new ErrorHandler(`Failed to delete skill: ${error.message}`, 500));
   }
 });
+
+
+
 
 // Update a skill
 export const updateSkill = catchAsyncErrors(async (req, res, next) => {

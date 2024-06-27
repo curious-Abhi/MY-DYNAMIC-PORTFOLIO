@@ -34,7 +34,7 @@ const ManageSkills = () => {
     navigateTo("/");
   };
   const { loading, skills, error, message } = useSelector(
-    (state) => state.skill
+    (state) => state.skills
   );
   const dispatch = useDispatch();
 
@@ -44,13 +44,33 @@ const ManageSkills = () => {
   };
 
   const handleUpdateSkill = (id) => {
-    dispatch(updateSkill(id, newProficiency));
+    dispatch(updateSkill({ id, proficiency: newProficiency }));
   };
 
   const handleDeleteSkill = (id) => {
     dispatch(deleteSkill(id));
   };
 
+
+
+  // const handleDeleteSkill = (id) => {
+  //   console.log("Received ID for deletion:", id);  // Debug log
+  
+  //   if (typeof id !== 'string' && typeof id !== 'number') {
+  //     console.error("Invalid Skill ID (frontend):", id);
+  //     return;
+  //   }
+  
+  //   const numericId = typeof id === 'number' ? id : parseInt(id, 10);
+  //   if (isNaN(numericId)) {
+  //     console.error("Conversion to numeric ID failed:", id);
+  //     return;
+  //   }
+  
+  //   console.log("Deleting skill with numeric ID (frontend):", numericId);
+  //   dispatch(deleteSkill(numericId));
+  // };
+  
   useEffect(() => {
     if (error) {
       toast.error(error);
@@ -61,7 +81,11 @@ const ManageSkills = () => {
       dispatch(resetSkillSlice());
       dispatch(getAllSkills());
     }
-  }, [dispatch, loading, error]);
+  }, [dispatch, error, message]);
+
+  useEffect(() => {
+    dispatch(getAllSkills());
+  }, [dispatch]);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -75,16 +99,23 @@ const ManageSkills = () => {
               </Button>
             </CardHeader>
             <CardContent className="grid sm:grid-cols-2 gap-4">
-              {skills.map((element) => {
-                return (
-                  <Card key={element._id}>
+              {skills && skills.length > 0 ? (
+                skills.map((element) => (
+                  <Card key={element.id}>
+                    {" "}
+                    // Use correct ID field
                     <CardHeader className="text-3xl font-bold flex items-center justify-between flex-row">
                       {element.title}
                       <TooltipProvider>
                         <Tooltip>
                           <TooltipTrigger asChild>
                             <Trash2
-                              onClick={() => handleDeleteSkill(element._id)}
+                              onClick={() => {
+                                console.log("Element:", element); // Debug log
+                                const skillId = element.id;
+                                console.log("Element ID:", skillId); // Debug log
+                                handleDeleteSkill(skillId);
+                              }}
                               className="h-5 w-5 hover:text-red-500"
                             />
                           </TooltipTrigger>
@@ -100,12 +131,14 @@ const ManageSkills = () => {
                         type="number"
                         defaultValue={element.proficiency}
                         onChange={(e) => handleInputChange(e.target.value)}
-                        onBlur={() => handleUpdateSkill(element._id)}
+                        onBlur={() => handleUpdateSkill(element.id)} // Use correct ID field
                       />
                     </CardFooter>
                   </Card>
-                );
-              })}
+                ))
+              ) : (
+                <div>No skills available</div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

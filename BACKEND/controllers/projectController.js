@@ -194,10 +194,14 @@ export const getAllProjects = catchAsyncErrors(async (req, res, next) => {
 // Get a single project
 export const getSingleProject = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
+  // console.log(id)
+  // console.log(typeof id)
+  const projectID = parseInt(id, 10);
+
 
   try {
     const query = 'SELECT * FROM projects WHERE id = $1';
-    const result = await db.query(query, [id]);
+    const result = await db.query(query, [projectID]);
     const project = result.rows[0];
 
     if (!project) {

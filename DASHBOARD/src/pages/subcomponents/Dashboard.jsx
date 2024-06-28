@@ -154,7 +154,7 @@ const Dashboard = () => {
                               </Link>
                             </TableCell>
                             <TableCell className="text-right">
-                              <Link to={element.projectLink} target="_blank">
+                              <Link to={element.project_link} target="_blank">
                                 <Button>Visit</Button>
                               </Link>
                             </TableCell>

@@ -1,11 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,18 +8,15 @@ import axios from "axios";
 import SpecialLoadingButton from "./subcomponents/SpecialLoadingButton";
 import {
   clearAllProjectErrors,
-  getAllProjects,
-  resetProjectSlice,
   updateProject,
 } from "@/store/slices/projectSlice";
 import { Button } from "@/components/ui/button";
-
 const UpdateProject = () => {
   const [projectData, setProjectData] = useState({
     title: "",
     description: "",
-    technologies: "",
-    stack: "",
+    technologies: [],
+    stack: [],
     git_repo_link: "",
     deployed: "",
     project_link: "",
@@ -43,22 +33,22 @@ const UpdateProject = () => {
     const getProject = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/api/v1/project/getall/${id}`,
+          `http://localhost:4000/api/v1/project/get/${id}`,
           {
             withCredentials: true,
           }
         );
-        const { data } = response;
+        const { project } = response.data;
         setProjectData({
-          title: data.title,
-          description: data.description,
-          technologies: data.technologies,
-          stack: data.stack,
-          git_repo_link: data.git_repo_link,
-          deployed: data.deployed,
-          project_link: data.project_link,
-          projectBanner: data.projectBanner,
-          projectBannerPreview: data.projectBannerPreview,
+          title: project.title,
+          description: project.description,
+          technologies: project.technologies,
+          stack: project.stack,
+          git_repo_link: project.git_repo_link,
+          deployed: project.deployed,
+          project_link: project.project_link,
+          projectBanner: project.project_banner_url,
+          projectBannerPreview: project.project_banner_url,
         });
       } catch (error) {
         toast.error(error.response.data.message);
@@ -89,10 +79,10 @@ const UpdateProject = () => {
     if (
       !projectData.title ||
       !projectData.description ||
-      !projectData.technologies ||
-      !projectData.stack ||
+      projectData.technologies.length === 0 ||
+      projectData.stack.length === 0 ||
       !projectData.git_repo_link ||
-      !projectData.deployed 
+      !projectData.deployed
     ) {
       toast.error("Please fill in all required fields.");
       return false;
@@ -102,7 +92,7 @@ const UpdateProject = () => {
 
   const handleUpdateProject = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -110,14 +100,14 @@ const UpdateProject = () => {
     const formData = new FormData();
     formData.append("title", projectData.title);
     formData.append("description", projectData.description);
-    formData.append("technologies", projectData.technologies);
-    formData.append("stack", projectData.stack);
+    formData.append("technologies", JSON.stringify(projectData.technologies));
+    formData.append("stack", JSON.stringify(projectData.stack));
     formData.append("git_repo_link", projectData.git_repo_link);
     formData.append("deployed", projectData.deployed);
     formData.append("project_link", projectData.project_link);
     formData.append("projectBanner", projectData.projectBanner);
 
-    dispatch(updateProject(id, formData));
+    dispatch(updateProject({ id, formData }));
   };
 
   const handleReturnToDashboard = () => {
@@ -208,11 +198,11 @@ const UpdateProject = () => {
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                       <Textarea
                         placeholder="HTML, CSS, JAVASCRIPT, REACT"
-                        value={projectData.technologies}
+                        value={projectData.technologies.join(", ")}
                         onChange={(e) =>
                           setProjectData({
                             ...projectData,
-                            technologies: e.target.value,
+                            technologies: e.target.value.split(", "),
                           })
                         }
                       />
@@ -225,28 +215,16 @@ const UpdateProject = () => {
                   </label>
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                      <Select
-                        value={projectData.stack}
-                        onValueChange={(selectedValue) =>
+                      <Textarea
+                        placeholder="Full Stack, Frontend, Backend"
+                        value={projectData.stack.join(", ")}
+                        onChange={(e) =>
                           setProjectData({
                             ...projectData,
-                            stack: selectedValue,
+                            stack: e.target.value.split(", "),
                           })
                         }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Project Stack" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Full Stack">Full Stack</SelectItem>
-                          <SelectItem value="Frontend">Frontend</SelectItem>
-                          <SelectItem value="PERN">PERN</SelectItem>
-                          <SelectItem value="MERN">MERN</SelectItem>
-                          <SelectItem value="MEAN">MEAN</SelectItem>
-                          <SelectItem value="NEXT.JS">NEXT.JS</SelectItem>
-                          <SelectItem value="REACT.JS">REACT.JS</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      />
                     </div>
                   </div>
                 </div>
@@ -256,23 +234,16 @@ const UpdateProject = () => {
                   </label>
                   <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                      <Select
+                      <Textarea
+                        placeholder="Yes, No"
                         value={projectData.deployed}
-                        onValueChange={(selectedValue) =>
+                        onChange={(e) =>
                           setProjectData({
                             ...projectData,
-                            deployed: selectedValue,
+                            deployed: e.target.value,
                           })
                         }
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Is this project deployed?" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Yes">Yes</SelectItem>
-                          <SelectItem value="No">No</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      />
                     </div>
                   </div>
                 </div>

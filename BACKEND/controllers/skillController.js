@@ -51,11 +51,11 @@ export const addNewSkill = catchAsyncErrors(async (req, res, next) => {
 export const deleteSkill = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
 
-  console.log('Received ID:', id);  // Debug log
+  //console.log('Received ID:', id);  // Debug log
 
   const skillId = parseInt(id, 10);
-  console.log('Converted Skill ID:', skillId);
-  console.log('Type of Converted Skill ID:', typeof skillId);
+  // console.log('Converted Skill ID:', skillId);
+  // console.log('Type of Converted Skill ID:', typeof skillId);
 
   if (isNaN(skillId)) {
     return next(new ErrorHandler('Invalid Skill ID', 400));
@@ -93,30 +93,18 @@ export const deleteSkill = catchAsyncErrors(async (req, res, next) => {
 export const updateSkill = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
   const { proficiency } = req.body;
-
-  // Ensure id is a string and proficiency is defined
-  console.log('Converted Skill ID:', id);
-  console.log('Type of Converted Skill ID:', typeof id);
-  console.log('Converted proficiency:', proficiency);
-  console.log('Type of proficiency:', typeof proficiency);
-
+// console.log("profieciency:",proficiency)
+// console.log("proficiency type:", typeof proficiency)
   // Convert skillId to integer if necessary
   const skillId = parseInt(id, 10);
 
-  // Check if proficiency is undefined or not a valid number
-  if (isNaN(skillId)) {
-    return next(new ErrorHandler("Invalid skill ID", 400));
-  }
-  if (proficiency === undefined || isNaN(proficiency)) {
-    return next(new ErrorHandler("Invalid proficiency value", 400));
-  }
 
   try {
     const findQuery = 'SELECT * FROM skills WHERE id = $1';
     const values = [skillId];
 
     const result = await db.query(findQuery, values);
-    let skill = result.rows[0];
+    const skill = result.rows[0];
 
     if (!skill) {
       return next(new ErrorHandler("Skill not found!", 404));
@@ -131,18 +119,17 @@ export const updateSkill = catchAsyncErrors(async (req, res, next) => {
     const updateValues = [proficiency, skillId];
 
     const updateResult = await db.query(updateQuery, updateValues);
-    skill = updateResult.rows[0];
+    const updatedSkill = updateResult.rows[0];
 
     res.status(200).json({
       success: true,
       message: "Skill Updated!",
-      skill,
+      skill: updatedSkill,
     });
   } catch (error) {
     return next(new ErrorHandler("Failed to update skill: " + error.message, 500));
   }
 });
-
 
 
 // Get all skills

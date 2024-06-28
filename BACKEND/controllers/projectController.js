@@ -24,8 +24,6 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
     if (
       !title ||
       !description ||
-
-      !stack ||
       !technologies ||
       !deployed
     ) {
@@ -82,9 +80,11 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
   });
 
   // Update a project
-export const updateProject = catchAsyncErrors(async (req, res, next) => {
+  export const updateProject = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
+    const projectID = parseInt(id, 10);
     const fields = req.body;
+    console.log(fields);
   
     let query = 'UPDATE projects SET ';
     const values = [];
@@ -93,15 +93,18 @@ export const updateProject = catchAsyncErrors(async (req, res, next) => {
     for (const field in fields) {
       if (field !== 'projectBanner') {
         let value = fields[field];
-        
+  
         // Handle arrays for stack and technologies
-      if (field === 'stack' || field === 'technologies') {
-        if (Array.isArray(fields[field])) {
-          value = `{${fields[field].join(',')}}`;
-        } else {
-          return next(new ErrorHandler(`${field} should be an array`, 400));
+        if (field === 'stack' || field === 'technologies') {
+          if (Array.isArray(fields[field])) {
+            value = `{${fields[field].join(',')}}`;
+          } else if (typeof fields[field] === 'string') {
+            // Optionally convert comma-separated string to array
+            value = `{${fields[field].split(',').join(',')}}`;
+          } else {
+            return next(new ErrorHandler(`${field} should be an array`, 400));
+          }
         }
-      }
   
         query += `${field} = $${counter}, `;
         values.push(value);
@@ -126,11 +129,11 @@ export const updateProject = catchAsyncErrors(async (req, res, next) => {
   
     query = query.slice(0, -2); // Remove the trailing comma and space
     query += ' WHERE id = $' + counter;
-    values.push(id);
+    values.push(projectID);
   
     try {
       await db.query(query, values);
-      const updatedProject = (await db.query('SELECT * FROM projects WHERE id = $1', [id])).rows[0];
+      const updatedProject = (await db.query('SELECT * FROM projects WHERE id = $1', [projectID])).rows[0];
       res.status(200).json({
         success: true,
         message: 'Project Updated!',
@@ -140,13 +143,17 @@ export const updateProject = catchAsyncErrors(async (req, res, next) => {
       return next(new ErrorHandler('Failed to update project: ' + error.message, 500));
     }
   });
+  
 // Delete a project
 export const deleteProject = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
+  //console.log("fronntend:",id)
+  const projectId = parseInt(id, 10);
+
 
   try {
     const findQuery = 'SELECT * FROM projects WHERE id = $1';
-    const findResult = await db.query(findQuery, [id]);
+    const findResult = await db.query(findQuery, [projectId]);
     const project = findResult.rows[0];
 
     if (!project) {
@@ -157,7 +164,7 @@ export const deleteProject = catchAsyncErrors(async (req, res, next) => {
     await cloudinary.uploader.destroy(projectImageId);
 
     const deleteQuery = 'DELETE FROM projects WHERE id = $1 RETURNING *';
-    await db.query(deleteQuery, [id]);
+    await db.query(deleteQuery, [projectId]);
 
     res.status(200).json({
       success: true,

@@ -84,13 +84,13 @@ const ManageProjects = () => {
                     {projects && projects.length > 0 ? (
                       projects.map((element) => {
                         return (
-                          <TableRow className="bg-accent" key={element._id}>
+                          <TableRow className="bg-accent" key={element.id}>
                             <TableCell>
                               <div className="font-medium">
                                 <img
                                   src={
-                                    element.projectBanner &&
-                                    element.projectBanner.url
+                                    element.project_banner &&
+                                    element.project_banner_url
                                   }
                                   alt={element.title}
                                   className="w-16 h-16"
@@ -110,7 +110,7 @@ const ManageProjects = () => {
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
-                                    <Link to={`/view/project/${element._id}`}>
+                                    <Link to={`/view/project/${element.id}`}>
                                       <button
                                         className="border-green-600 border-2 rounded-full h-8 w-8 flex 
                                       justify-center items-center text-green-600  hover:text-slate-950 
@@ -128,7 +128,7 @@ const ManageProjects = () => {
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
-                                    <Link to={`/update/project/${element._id}`}>
+                                    <Link to={`/update/project/${element.id}`}>
                                       <button className="border-yellow-400 border-2 rounded-full h-8 w-8 flex justify-center items-center text-yellow-400  hover:text-slate-950 hover:bg-yellow-400">
                                         <Pen className="h-5 w-5" />
                                       </button>
@@ -145,7 +145,7 @@ const ManageProjects = () => {
                                     <button
                                       className="border-red-600 border-2 rounded-full h-8 w-8 flex justify-center items-center text-red-600  hover:text-slate-50 hover:bg-red-600"
                                       onClick={() =>
-                                        handleProjectDelete(element._id)
+                                        handleProjectDelete(element.id)
                                       }
                                     >
                                       <Trash2 className="h-5 w-5" />

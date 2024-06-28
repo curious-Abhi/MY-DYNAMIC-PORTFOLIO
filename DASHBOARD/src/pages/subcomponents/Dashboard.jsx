@@ -149,7 +149,7 @@ const Dashboard = () => {
                               <Badge className="text-xs" variant="secondary">{element.deployed}</Badge>
                             </TableCell>
                             <TableCell className="md:table-cell">
-                              <Link to={`/update/project/${element._id}`}>
+                              <Link to={`/update/project/${element.id}`}>
                                 <Button>Update</Button>
                               </Link>
                             </TableCell>

@@ -38,18 +38,18 @@ const ManageSkills = () => {
   );
   const dispatch = useDispatch();
 
-  const [proficiencyValues, setProficiencyValues] = useState({});
+  const [newProficiency, setNewProficiency] = useState({});
 
   const handleInputChange = (id, proficiency) => {
-    setProficiencyValues((prev) => ({
-      ...prev,
-      [id]: proficiency,
+    const numericProficiency = Number(proficiency);
+    setNewProficiency((prevState) => ({
+      ...prevState,
+      [id]: numericProficiency,
     }));
   };
 
   const handleUpdateSkill = (id) => {
-    const proficiency = proficiencyValues[id] || element.proficiency;
-    dispatch(updateSkill({ id, proficiency }));
+    dispatch(updateSkill(id, newProficiency[id]));
   };
 
   const handleDeleteSkill = (id) => {
@@ -133,7 +133,7 @@ const ManageSkills = () => {
                       <Input
                         type="number"
                         value={
-                          proficiencyValues[element.id] || element.proficiency
+                          newProficiency[element.id] ?? element.proficiency
                         }
                         onChange={(e) =>
                           handleInputChange(element.id, e.target.value)

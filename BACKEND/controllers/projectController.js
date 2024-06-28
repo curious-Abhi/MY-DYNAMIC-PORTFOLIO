@@ -83,7 +83,7 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
   export const updateProject = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
     const projectID = parseInt(id, 10);
-    const fields = req.body;
+   // const fields = req.body;
     console.log(fields);
   
     let query = 'UPDATE projects SET ';

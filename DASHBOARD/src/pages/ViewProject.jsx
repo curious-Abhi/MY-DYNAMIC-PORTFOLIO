@@ -69,7 +69,7 @@ const ViewProject = () => {
                 <div className="w-full sm:col-span-4">
                   <p className="text-2xl mb-2">Description:</p>
                   <ul className="list-disc">
-                    {description.split(". ").map((item, index) => (
+                    {description.split(".").map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>

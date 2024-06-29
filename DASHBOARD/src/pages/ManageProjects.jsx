@@ -89,7 +89,9 @@ const ManageProjects = () => {
                               <div className="font-medium">
                                 <img
                                   src={
-                                    element.project_banner &&
+                                    element.
+                                    project_banner_public_id
+                                     &&
                                     element.project_banner_url
                                   }
                                   alt={element.title}

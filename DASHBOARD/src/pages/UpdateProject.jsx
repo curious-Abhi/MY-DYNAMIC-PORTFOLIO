@@ -40,6 +40,7 @@ const UpdateProject = () => {
             withCredentials: true,
           }
         );
+       // console.log("Fetched Project Data:", response.data);
         const { project } = response.data;
         setProjectData({
           title: project.title,
@@ -49,7 +50,7 @@ const UpdateProject = () => {
           git_repo_link: project.git_repo_link,
           deployed: project.deployed,
           project_link: project.project_link,
-          projectBanner: project.project_banner_url,
+          projectBanner: project.project_banner_public_id,
           projectBannerPreview: project.project_banner_url,
         });
       } catch (error) {

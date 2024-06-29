@@ -83,14 +83,9 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
-        <img
-          src="/placeholder.svg"
-          alt="Image"
-          width="1920"
-          height="1080"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
+
+      <div className="flex justify-center items-center bg-muted">
+        <img src="/login.png" alt="login" />
       </div>
     </div>
   );

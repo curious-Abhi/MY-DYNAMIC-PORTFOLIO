@@ -83,7 +83,7 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
   export const updateProject = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
     const projectID = parseInt(id, 10);
-   // const fields = req.body;
+    const fields = req.body; // Assuming body-parser is used
     console.log(fields);
   
     let query = 'UPDATE projects SET ';
@@ -97,10 +97,10 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
         // Handle arrays for stack and technologies
         if (field === 'stack' || field === 'technologies') {
           if (Array.isArray(fields[field])) {
-            value = `{${fields[field].join(',')}}`;
+            value = '{' + fields[field].join(',') + '}';
           } else if (typeof fields[field] === 'string') {
             // Optionally convert comma-separated string to array
-            value = `{${fields[field].split(',').join(',')}}`;
+            value = '{' + fields[field].split(',').join(',') + '}';
           } else {
             return next(new ErrorHandler(`${field} should be an array`, 400));
           }
@@ -143,6 +143,8 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
       return next(new ErrorHandler('Failed to update project: ' + error.message, 500));
     }
   });
+  
+
   
 // Delete a project
 export const deleteProject = catchAsyncErrors(async (req, res, next) => {

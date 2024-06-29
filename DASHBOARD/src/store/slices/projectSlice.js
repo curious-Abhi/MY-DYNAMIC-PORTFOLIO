@@ -138,12 +138,12 @@ export const deleteProject = (id) => async (dispatch) => {
     );
   }
 };
-export const updateProject = (id, newData) => async (dispatch) => {
+export const updateProject = ({ id, formData }) => async (dispatch) => {
   dispatch(projectSlice.actions.updateProjectRequest());
   try {
     const response = await axios.put(
       `http://localhost:4000/api/v1/project/update/${id}`,
-      newData,
+      formData,
       {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
@@ -152,12 +152,21 @@ export const updateProject = (id, newData) => async (dispatch) => {
     dispatch(projectSlice.actions.updateProjectSuccess(response.data.message));
     dispatch(projectSlice.actions.clearAllErrors());
   } catch (error) {
-    console.log(error);
-    dispatch(
-      projectSlice.actions.updateProjectFailed(error.response.data.message)
-    );
+    console.error("Axios error:", error);
+    if (error.response) {
+      console.error("Error response data:", error.response.data);
+      dispatch(
+        projectSlice.actions.updateProjectFailed(error.response.data.message)
+      );
+    } else {
+      console.error("Error message:", error.message);
+      dispatch(
+        projectSlice.actions.updateProjectFailed("An unexpected error occurred")
+      );
+    }
   }
 };
+
 
 export const resetProjectSlice = () => (dispatch) => {
   dispatch(projectSlice.actions.resetProjectSlice());

@@ -94,23 +94,27 @@ const UpdateProject = () => {
 
   const handleUpdateProject = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) {
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("title", projectData.title);
     formData.append("description", projectData.description);
-    formData.append("technologies", JSON.stringify(projectData.technologies));
-    formData.append("stack", JSON.stringify(projectData.stack));
+    formData.append("technologies", projectData.technologies.join(','));
+    formData.append("stack", projectData.stack.join(','));
     formData.append("git_repo_link", projectData.git_repo_link);
     formData.append("deployed", projectData.deployed);
     formData.append("project_link", projectData.project_link);
     formData.append("projectBanner", projectData.projectBanner);
-
+  
+    console.log("FormData being sent:", [...formData.entries()]); // Debugging log
+  
     dispatch(updateProject({ id, formData }));
   };
+  
+  
 
   const handleReturnToDashboard = () => {
     navigateTo("/");

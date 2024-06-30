@@ -13,7 +13,7 @@ const Portfolio = () => {
         "http://localhost:4000/api/v1/project/getall",
         { withCredentials: true }
       );
-      console.log(data)
+      //console.log(data)
       setProjects(data.projects);
     };
     getMyProjects();

@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 const ProjectView = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [technologies, setTechnologies] = useState("");
-  const [stack, setStack] = useState("");
+  const [technologies, setTechnologies] = useState([]);
+  const [stack, setStack] = useState([]);
   const [git_repo_link, setGitRepoLink] = useState("");
   const [deployed, setDeployed] = useState("");
   const [project_link, setProjectLink] = useState("");
@@ -18,33 +18,26 @@ const ProjectView = () => {
 
   useEffect(() => {
     const getProject = async () => {
-      await axios
-        .get(`http://localhost:4000/api/v1/project/get/${id}`, {
+      try {
+        const res = await axios.get(`http://localhost:4000/api/v1/project/get/${id}`, {
           withCredentials: true,
-        })
-        .then((res) => {
-          setTitle(res.data.project.title);
-          setDescription(res.data.project.description);
-          setStack(res.data.project.stack);
-          setDeployed(res.data.project.deployed);
-          setTechnologies(res.data.project.technologies);
-          setGitRepoLink(res.data.project.git_repo_link);
-          setProjectLink(res.data.project.project_link);
-          setProjectBanner(
-            res.data.project.project_banner_public_id && res.data.project.project_banner_url
-          );
-          setProjectBannerPreview(
-            res.data.project.project_banner_public_id && res.data.project.project_banner_url
-          );
-        })
-        .catch((error) => {
-          toast.error(error.response.data.message);
         });
+        const project = res.data.project;
+        setTitle(project.title);
+        setDescription(project.description);
+        setStack(project.stack);
+        setDeployed(project.deployed);
+        setTechnologies(project.technologies);
+        setGitRepoLink(project.git_repo_link);
+        setProjectLink(project.project_link);
+        setProjectBanner(project.project_banner_url || "/avatarHolder.jpg");
+        setProjectBannerPreview(project.project_banner_url || "/avatarHolder.jpg");
+      } catch (error) {
+        toast.error(error.response.data.message);
+      }
     };
     getProject();
   }, [id]);
-
-
 
   const navigateTo = useNavigate();
   const handleReturnToPortfolio = () => {
@@ -66,10 +59,7 @@ const ProjectView = () => {
                 <div className="w-full sm:col-span-4">
                   <h1 className="text-2xl font-bold mb-4">{title}</h1>
                   <img
-                    src={
-                      projectBannerPreview
-                        ? projectBannerPreview: "/avatarHolder.jpg"
-                    }
+                    src={projectBannerPreview}
                     alt="projectBanner"
                     className="w-full h-auto"
                   />
@@ -77,7 +67,7 @@ const ProjectView = () => {
                 <div className="w-full sm:col-span-4">
                   <p className="text-2xl mb-2">Description:</p>
                   <ul className="list-disc">
-                    {description.split(".").map((item, index) => (
+                    {description.split(".").filter(Boolean).map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
                   </ul>
@@ -104,23 +94,25 @@ const ProjectView = () => {
                 </div>
                 <div className="w-full sm:col-span-4">
                   <p className="text-2xl mb-2">Github Repository Link:</p>
-                  <Link
+                  <a
                     className="text-sky-700"
                     target="_blank"
-                    to={git_repo_link}
+                    href={git_repo_link}
+                    rel="noopener noreferrer"
                   >
                     {git_repo_link}
-                  </Link>
+                  </a>
                 </div>
                 <div className="w-full sm:col-span-4">
                   <p className="text-2xl mb-2">Project Link:</p>
-                  <Link
+                  <a
                     className="text-sky-700"
                     target="_blank"
-                    to={project_link}
+                    href={project_link}
+                    rel="noopener noreferrer"
                   >
                     {project_link}
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

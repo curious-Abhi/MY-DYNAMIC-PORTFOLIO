@@ -9,7 +9,6 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 import { ModeToggle } from "./components/mode-toggle";
-import './customStyles.css';
 function App() {
 
 

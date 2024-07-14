@@ -40,10 +40,10 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
     res.status(201).json({
       success: true,
       message: "New Certificate Added!",
-      softwareApplication,
+      certificate,
     });
   } catch (error) {
-    return next(new ErrorHandler("Failed to add software application: " + error.message, 500));
+    return next(new ErrorHandler("Failed to add certificate: " + error.message, 500));
   }
 });
 

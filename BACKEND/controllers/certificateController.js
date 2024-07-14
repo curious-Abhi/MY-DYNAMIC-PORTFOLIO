@@ -29,8 +29,8 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
     }
 
     const query = `
-      INSERT INTO software_applications (name, organization_name , img_public_id, img_url)
-      VALUES ($1, $2, $3)
+      INSERT INTO certificate (name, organization_name , img_public_id, img_url)
+      VALUES ($1, $2, $3,$4)
       RETURNING *;
     `;
     const values = [name, cloudinaryResponse.public_id, cloudinaryResponse.secure_url];

@@ -6,11 +6,12 @@ import { v2 as cloudinary } from "cloudinary";
 // Add a new certificate
 export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
-    return next(new ErrorHandler(" Certificate Icon/Image Required!", 404));
+    return next(new ErrorHandler(" Certificate Image Required!", 404));
   }
   
   const { img } = req.files;
   const { name } = req.body;
+  const{organization}=req.body;
 
   if (!name) {
     return next(new ErrorHandler("Please Provide Certificate's Name!", 400));
@@ -28,7 +29,7 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
     }
 
     const query = `
-      INSERT INTO software_applications (name, img_public_id, img_url)
+      INSERT INTO software_applications (name, organization_name , img_public_id, img_url)
       VALUES ($1, $2, $3)
       RETURNING *;
     `;

@@ -32,7 +32,7 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
     }
 
     const query = `
-      INSERT INTO certificate (name, organization_name , img_public_id, img_url)
+      INSERT INTO certificates (name, organization_name , img_public_id, img_url)
       VALUES ($1, $2, $3,$4)
       RETURNING *;
     `;

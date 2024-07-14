@@ -11,15 +11,18 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
   
   const { img } = req.files;
   const { name } = req.body;
-  const{organization}=req.body;
+  const{organizationName}=req.body;
 
   if (!name) {
     return next(new ErrorHandler("Please Provide Certificate's Name!", 400));
   }
+  if (!organizationName) {
+    return next(new ErrorHandler("Please Provide Issued Organization  Name!", 400));
+  }
 
   try {
     const cloudinaryResponse = await cloudinary.uploader.upload(
-      svg.tempFilePath,
+      img.tempFilePath,
       { folder: "PORTFOLIO_CERTIFICATE_IMAGES" }
     );
 

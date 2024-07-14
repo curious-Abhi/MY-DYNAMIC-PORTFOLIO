@@ -35,11 +35,11 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
     const values = [name, cloudinaryResponse.public_id, cloudinaryResponse.secure_url];
 
     const result = await db.query(query, values);
-    const softwareApplication = result.rows[0];
+    const certificate = result.rows[0];
 
     res.status(201).json({
       success: true,
-      message: "New Software Application Added!",
+      message: "New Certificate Added!",
       softwareApplication,
     });
   } catch (error) {

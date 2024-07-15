@@ -61,22 +61,22 @@ export const deleteCertificate = catchAsyncErrors(async (req, res, next) => {
     const values = [id];
 
     const result = await db.query(findQuery, values);
-    const softwareApplication = result.rows[0];
+    const Certificate = result.rows[0];
 
-    if (!softwareApplication) {
+    if (!Certificate) {
       return next(new ErrorHandler("Already Deleted!", 404));
     }
 
-    const softwareApplicationSvgId = softwareApplication.svg_public_id;
-    await cloudinary.uploader.destroy(softwareApplicationSvgId);
+    const certificateImgId = Certificate.img_public_id;
+    await cloudinary.uploader.destroy(certificateImgId);
     await db.query(deleteQuery, values);
 
     res.status(200).json({
       success: true,
-      message: "Software Application Deleted!",
+      message: "Certificate Deleted!",
     });
   } catch (error) {
-    return next(new ErrorHandler("Failed to delete software application: " + error.message, 500));
+    return next(new ErrorHandler("Failed to delete certificate: " + error.message, 500));
   }
 });
 

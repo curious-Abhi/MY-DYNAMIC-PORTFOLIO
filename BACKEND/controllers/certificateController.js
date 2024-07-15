@@ -52,12 +52,12 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Delete a certificate
-export const deleteApplication = catchAsyncErrors(async (req, res, next) => {
+export const deleteCertificate = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const findQuery = 'SELECT * FROM software_applications WHERE id = $1';
-    const deleteQuery = 'DELETE FROM software_applications WHERE id = $1 RETURNING *';
+    const findQuery = 'SELECT * FROM certificates WHERE id = $1';
+    const deleteQuery = 'DELETE FROM certificates WHERE id = $1 RETURNING *';
     const values = [id];
 
     const result = await db.query(findQuery, values);

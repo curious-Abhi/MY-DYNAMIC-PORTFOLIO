@@ -81,7 +81,7 @@ export const deleteCertificate = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Get all certificates
-export const getAllApplications = catchAsyncErrors(async (req, res, next) => {
+export const getAllCertificates = catchAsyncErrors(async (req, res, next) => {
   const query = 'SELECT * FROM software_applications';
 
   try {

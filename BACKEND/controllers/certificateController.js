@@ -51,7 +51,7 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-// Delete a software application
+// Delete a certificate
 export const deleteApplication = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.params;
 

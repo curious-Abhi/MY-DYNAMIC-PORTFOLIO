@@ -80,7 +80,7 @@ export const deleteCertificate = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-// Get all software applications
+// Get all certificates
 export const getAllApplications = catchAsyncErrors(async (req, res, next) => {
   const query = 'SELECT * FROM software_applications';
 

@@ -82,16 +82,16 @@ export const deleteCertificate = catchAsyncErrors(async (req, res, next) => {
 
 // Get all certificates
 export const getAllCertificates = catchAsyncErrors(async (req, res, next) => {
-  const query = 'SELECT * FROM software_applications';
+  const query = 'SELECT * FROM certificates';
 
   try {
     const result = await db.query(query);
-    const softwareApplications = result.rows;
+    const certificates = result.rows;
     res.status(200).json({
       success: true,
-      softwareApplications,
+      certificates,
     });
   } catch (error) {
-    return next(new ErrorHandler("Failed to retrieve software applications: " + error.message, 500));
+    return next(new ErrorHandler("Failed to retrieve certificates: " + error.message, 500));
   }
 });

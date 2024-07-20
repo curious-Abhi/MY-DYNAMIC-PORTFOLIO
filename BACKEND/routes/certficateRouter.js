@@ -10,7 +10,7 @@ router.post('/add', isAuthenticated, addNewCertificate);
 // Route to delete a certificate by ID
 router.delete('/delete/:id', isAuthenticated, deleteCertificate);
 
-// Route to get all software applications
+// Route to get all certificate
 router.get('/getall', getAllApplications);
 
 export default router;

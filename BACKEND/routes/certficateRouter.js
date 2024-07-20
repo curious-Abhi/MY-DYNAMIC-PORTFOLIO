@@ -11,6 +11,6 @@ router.post('/add', isAuthenticated, addNewCertificate);
 router.delete('/delete/:id', isAuthenticated, deleteCertificate);
 
 // Route to get all certificate
-router.get('/getall', getAllApplications);
+router.get('/getall', getAllCertificates);
 
 export default router;

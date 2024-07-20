@@ -5,7 +5,7 @@ import { isAuthenticated } from "../middlewares/auth";
 const router=express.Router;
 
 // Route to add a new certificate
-router.post('/add', isAuthenticated, addNewApplication);
+router.post('/add', isAuthenticated, addNewCertificate);
 
 // Route to delete a software application by ID
 router.delete('/delete/:id', isAuthenticated, deleteApplication);

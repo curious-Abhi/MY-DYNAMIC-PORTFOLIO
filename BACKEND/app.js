@@ -11,6 +11,7 @@ import timelineRouter from "./routes/timeLineRouter.js";
 import softwareApplication from "./routes/softwareApplicationRouter.js";
 import skillRouter from "./routes/skillRouter.js";
 import projectRouter from "./routes/projectRouter.js";
+import certificateRouter from "./routes/certficateRouter.js"
 
 
 const app=express();
@@ -48,6 +49,9 @@ app.use('/api/v1/softwareapplication',softwareApplication);
 app.use('/api/v1/skill',skillRouter);
 //use project routes
 app.use('/api/v1/project',projectRouter);
+//use certificate routes
+
+app.use('/api/v1/certificate',certificateRouter);
 
 app.use(errorMiddleware);
 

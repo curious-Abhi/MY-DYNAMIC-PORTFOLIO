@@ -2,7 +2,7 @@ import express from "express"
 import { addNewCertificate,deleteCertificate,getAllCertificates } from "../controllers/certificateController"
 import { isAuthenticated } from "../middlewares/auth";
 
-const router=express.Router;
+const router=express.Router();
 
 // Route to add a new certificate
 router.post('/add', isAuthenticated, addNewCertificate);

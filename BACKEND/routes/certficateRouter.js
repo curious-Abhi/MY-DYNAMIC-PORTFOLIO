@@ -8,7 +8,7 @@ const router=express.Router;
 router.post('/add', isAuthenticated, addNewCertificate);
 
 // Route to delete a certificate by ID
-router.delete('/delete/:id', isAuthenticated, deleteApplication);
+router.delete('/delete/:id', isAuthenticated, deleteCertificate);
 
 // Route to get all software applications
 router.get('/getall', getAllApplications);

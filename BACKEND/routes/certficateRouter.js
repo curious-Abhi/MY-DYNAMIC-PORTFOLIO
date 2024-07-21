@@ -1,6 +1,6 @@
 import express from "express"
-import { addNewCertificate,deleteCertificate,getAllCertificates } from "../controllers/certificateController"
-import { isAuthenticated } from "../middlewares/auth";
+import { addNewCertificate,deleteCertificate,getAllCertificates } from "../controllers/certificateController.js"
+import { isAuthenticated } from "../middlewares/auth.js";
 
 const router=express.Router();
 

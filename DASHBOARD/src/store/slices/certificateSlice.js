@@ -1,76 +1,76 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const certificateslice = createSlice({
-  name: "certificates",
+const Certificateslice = createSlice({
+  name: "Certificates",
   initialState: {
     loading: false,
-    certificates: [],
+    Certificates: [],
     error: null,
     message: null,
   },
   reducers: {
-    getAllcertificatesRequest(state, action) {
-      state.certificates = [];
+    getAllCertificatesRequest(state, action) {
+      state.Certificates = [];
       state.error = null;
       state.loading = true;
     },
-    getAllcertificatesSuccess(state, action) {
-      state.certificates = action.payload;
+    getAllCertificatesSuccess(state, action) {
+      state.Certificates = action.payload;
       state.error = null;
       state.loading = false;
     },
-    getAllcertificatesFailed(state, action) {
-      state.certificates = state.certificates;
+    getAllCertificatesFailed(state, action) {
+      state.Certificates = state.Certificates;
       state.error = action.payload;
       state.loading = false;
     },
-    addNewcertificatesRequest(state, action) {
+    addNewCertificatesRequest(state, action) {
       state.loading = true;
       state.error = null;
       state.message = null;
     },
-    addNewcertificatesSuccess(state, action) {
+    addNewCertificatesSuccess(state, action) {
       state.error = null;
       state.loading = false;
       state.message = action.payload;
     },
-    addNewcertificatesFailed(state, action) {
+    addNewCertificatesFailed(state, action) {
       state.error = action.payload;
       state.loading = false;
       state.message = null;
     },
-    deletecertificatesRequest(state, action) {
+    deleteCertificatesRequest(state, action) {
       state.loading = true;
       state.error = null;
       state.message = null;
     },
-    deletecertificatesSuccess(state, action) {
+    deleteCertificatesSuccess(state, action) {
       state.error = null;
       state.loading = false;
       state.message = action.payload;
     },
-    deletecertificatesFailed(state, action) {
+    deleteCertificatesFailed(state, action) {
       state.error = action.payload;
       state.loading = false;
       state.message = null;
     },
-    resetcertificateslice(state, action) {
+    resetCertificateslice(state, action) {
       state.error = null;
-      state.certificates = state.certificates;
+      state.Certificates = state.Certificates;
       state.message = null;
       state.loading = false;
     },
     clearAllErrors(state, action) {
       state.error = null;
-      state.certificates = state.certificates;
+      state.Certificates = state.Certificates;
     },
   },
 });
 
-export const getAllcertificates = () => async (dispatch) => {
+export const getAllCertificates = () => async (dispatch) => {
   dispatch(
-    certificateslice.actions.getAllcertificatesRequest()
+    Certificateslice.actions.getAllCertificatesRequest()
   );
   try {
     const response = await axios.get(
@@ -78,23 +78,23 @@ export const getAllcertificates = () => async (dispatch) => {
       { withCredentials: true }
     );
     dispatch(
-      certificateslice.actions.getAllcertificatesSuccess(
-        response.data.certificates
+      Certificateslice.actions.getAllCertificatesSuccess(
+        response.data.Certificates
       )
     );
-    dispatch(certificateslice.actions.clearAllErrors());
+    dispatch(Certificateslice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
-      certificateslice.actions.getAllcertificatesFailed(
+      Certificateslice.actions.getAllCertificatesFailed(
         error.response.data.message
       )
     );
   }
 };
 
-export const addNewSoftwareApplication = (formdata) => async (dispatch) => {
+export const addNewCertificate= (formdata) => async (dispatch) => {
   dispatch(
-    certificateslice.actions.addNewcertificatesRequest()
+    Certificateslice.actions.addNewCertificatesRequest()
   );
   try {
     const response = await axios.post(
@@ -106,23 +106,23 @@ export const addNewSoftwareApplication = (formdata) => async (dispatch) => {
       }
     );
     dispatch(
-      certificateslice.actions.addNewcertificatesSuccess(
+      Certificateslice.actions.addNewCertificatesSuccess(
         response.data.message
       )
     );
-    dispatch(certificateslice.actions.clearAllErrors());
+    dispatch(Certificateslice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
-      certificateslice.actions.addNewcertificatesFailed(
+      Certificateslice.actions.addNewCertificatesFailed(
         error.response.data.message
       )
     );
   }
 };
 
-export const deleteSoftwareApplication = (id) => async (dispatch) => {
+export const deleteCertificate= (id) => async (dispatch) => {
   dispatch(
-    certificateslice.actions.deletecertificatesRequest()
+    Certificateslice.actions.deleteCertificatesRequest()
   );
   try {
     const response = await axios.delete(
@@ -132,14 +132,14 @@ export const deleteSoftwareApplication = (id) => async (dispatch) => {
       }
     );
     dispatch(
-      certificateslice.actions.deletecertificatesSuccess(
+      Certificateslice.actions.deleteCertificatesSuccess(
         response.data.message
       )
     );
-    dispatch(certificateslice.actions.clearAllErrors());
+    dispatch(Certificateslice.actions.clearAllErrors());
   } catch (error) {
     dispatch(
-      certificateslice.actions.deletecertificatesFailed(
+      Certificateslice.actions.deleteCertificatesFailed(
         error.response.data.message
       )
     );
@@ -147,11 +147,11 @@ export const deleteSoftwareApplication = (id) => async (dispatch) => {
 };
 
 export const clearAllSoftwareAppErrors = () => (dispatch) => {
-  dispatch(certificateslice.actions.clearAllErrors());
+  dispatch(Certificateslice.actions.clearAllErrors());
 };
 
-export const resetcertificateslice = () => (dispatch) => {
-  dispatch(certificateslice.actions.resetcertificateslice());
+export const resetCertificateslice = () => (dispatch) => {
+  dispatch(Certificateslice.actions.resetCertificateslice());
 };
 
-export default certificateslice.reducer;
+export default Certificateslice.reducer;

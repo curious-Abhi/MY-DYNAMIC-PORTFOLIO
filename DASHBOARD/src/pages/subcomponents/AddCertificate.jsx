@@ -3,40 +3,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import SpecialLoadingButton from "./SpecialLoadingButton";
-import { addNewCertificate, clearAllSoftwareAppErrors, getAllCertificatess, resetCertificatesSlice } from "@/store/slices/certificateSlice";
+import { addNewCertificate, clearAllCertificateErrors, getAllCertificatess, resetCertificatesSlice } from "@/store/slices/certificateSlice";
 
-const AddCertificatess = () => {
+const AddCertificates = () => {
   const [name, setName] = useState("");
-  const [svg_url, setSvg] = useState(null);
-  const [svgPreview, setSvgPreview] = useState("");
+  const [img_url, setImg] = useState(null);
+  const [imgPreview, setImgPreview] = useState("");
 
-  const handleSvg = (e) => {
+  const handleImg = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setSvgPreview(reader.result);
-      setSvg(file);
+      setImgPreview(reader.result);
+      setImg(file);
     };
   };
 
   const { loading, error, message } = useSelector(
-    (state) => state.Certificates
+    (state) => state.certificates
   );
 
   const dispatch = useDispatch();
   
-  const handleAddSoftwareApp = (e) => {
+  const handleAddCertificate = (e) => {
     e.preventDefault();
 
-    if (!name || !svg_url) {
+    if (!name || !img_url) {
       toast.error("Please fill in all fields and upload a file.");
       return;
     }
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("svg", svg_url);
+    formData.append("img", img_url);
 
     dispatch(addNewCertificate(formData));
   };
@@ -44,15 +44,15 @@ const AddCertificatess = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
-      dispatch(clearAllSoftwareAppErrors());
+      dispatch(clearAllCertificateErrors());
     }
     if (message) {
       toast.success(message);
       dispatch(resetCertificatesSlice());
       dispatch(getAllCertificatess());
       setName("");
-      setSvg(null);
-      setSvgPreview("");
+      setImg(null);
+      setImgPreview("");
     }
   }, [dispatch, error, message]);
 
@@ -60,7 +60,7 @@ const AddCertificatess = () => {
     <div className="flex justify-center items-center min-h-[100vh] sm:gap-4 sm:py-4 sm:pl-14">
       <form
         className="w-[100%] px-5 md:w-[650px]"
-        onSubmit={handleAddSoftwareApp}
+        onSubmit={handleAddCertificate}
       >
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
@@ -87,14 +87,14 @@ const AddCertificatess = () => {
 
               <div className="w-full col-span-full">
                 <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Software Application's Svg
+                  Certificate's Image
                 </label>
                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
-                    {svgPreview ? (
+                    {imgPreview ? (
                       <img
                         className="mx-auto h-12 w-12 text-gray-300"
-                        src={svgPreview}
+                        src={imgPreview}
                         alt="SVG Preview"
                       />
                     ) : (
@@ -122,7 +122,7 @@ const AddCertificatess = () => {
                           name="file-upload"
                           type="file"
                           className="sr-only"
-                          onChange={handleSvg}
+                          onChange={handleImg}
                         />
                       </label>
                       <p className="pl-1">or drag and drop</p>
@@ -140,7 +140,7 @@ const AddCertificatess = () => {
         <div className="mt-6 flex items-center justify-end gap-x-6">
           {!loading ? (
             <Button type="submit" className="w-full">
-              Add Application
+              Add Certificate
             </Button>
           ) : (
             <SpecialLoadingButton content={"Adding New Application"} />
@@ -151,4 +151,4 @@ const AddCertificatess = () => {
   );
 };
 
-export default AddCertificatess;
+export default AddCertificates;

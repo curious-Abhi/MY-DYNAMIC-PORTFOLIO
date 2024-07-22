@@ -32,6 +32,7 @@ import { toast } from "react-toastify";
 import SpecialLoadingButton from "./SpecialLoadingButton";
 import { clearAllTimelineErrors } from "@/store/slices/timelineSlice";
 import { clearAllProjectErrors } from "@/store/slices/projectSlice";
+import { addNewCertificate, clearAllCertificateErrors, getAllCertificatess, resetCertificatesSlice } from "@/store/slices/certificateSlice";
 
 const Dashboard = () => {
   const navigateTo = useNavigate();
@@ -42,6 +43,7 @@ const Dashboard = () => {
   const { softwareApplications, loading: appLoading, error: appError, message: appMessage } = useSelector((state) => state.softwareApplication);
   const { timeline, loading: timelineLoading, error: timelineError, message: timelineMessage } = useSelector((state) => state.timeline);
   const { projects, error: projectError } = useSelector((state) => state.project);
+  const {certificates, loading: certificateLoading ,error:certificateError, message: certificateMessage}=useSelector((state)=>state.certificates)
 
   const [appId, setAppId] = useState(null);
 
@@ -59,12 +61,22 @@ const Dashboard = () => {
       toast.error(appError);
       dispatch(clearAllSoftwareAppErrors());
     }
+    if (certificateError) {
+      toast.error(certificateError);
+      dispatch(clearAllCertificateErrors());
+    }
     if (projectError) {
       toast.error(projectError);
       dispatch(clearAllProjectErrors());
     }
     if (appMessage) {
       toast.success(appMessage);
+      setAppId(null);
+      dispatch(resetSoftwareApplicationSlice());
+      dispatch(getAllSoftwareApplications());
+    }
+    if (certificateMessage) {
+      toast.success(certificateMessage);
       setAppId(null);
       dispatch(resetSoftwareApplicationSlice());
       dispatch(getAllSoftwareApplications());

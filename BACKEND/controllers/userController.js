@@ -379,4 +379,18 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 
+export const findUserById = async (id) => {
+  // const query = "SELECT * FROM users WHERE id = $1";
+  const query = "SELECT id, full_name, email, phone, about_me, avatar_public_id, avatar_url, resume_public_id, resume_url, portfolio_url, github_url, instagram_url, twitter_url, linkedin_url, facebook_url FROM users WHERE id = $1";
+   const values = [id];
+ 
+   try {
+     const res = await db.query(query, values);
+     return res.rows[0];
+   } catch (error) {
+     throw new Error("Failed to find user by ID: " + error.message);
+   }
+ };
+ 
+
 

@@ -110,7 +110,7 @@ const UpdateProject = () => {
     formData.append("project_link", projectData.project_link);
     formData.append("projectBanner", projectData.projectBanner);
   
-    console.log("FormData being sent:", [...formData.entries()]); // Debugging log
+    //console.log("FormData being sent:", [...formData.entries()]); // Debugging log
   
     dispatch(updateProject({ id, formData }));
   };

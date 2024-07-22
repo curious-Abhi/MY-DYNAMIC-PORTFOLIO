@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-import { findUserById } from "../models/userSchema.js";
+import { findUserById } from "../controllers/userController.js";
+
 import ErrorHandler from "./error.js";
 import { catchAsyncErrors } from "./catchAsyncErrors.js";
 

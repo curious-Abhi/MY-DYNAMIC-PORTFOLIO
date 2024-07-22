@@ -84,7 +84,7 @@ export const addNewProject = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
     const projectID = parseInt(id, 10);
     const fields = req.body; // Assuming body-parser is used
-    console.log(fields);
+   // console.log(fields);
   
     let query = 'UPDATE projects SET ';
     const values = [];

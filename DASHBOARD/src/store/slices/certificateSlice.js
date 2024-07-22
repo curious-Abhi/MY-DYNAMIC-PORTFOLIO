@@ -146,11 +146,11 @@ export const deleteCertificate= (id) => async (dispatch) => {
   }
 };
 
-export const clearAllSoftwareAppErrors = () => (dispatch) => {
+export const clearAllCertificateErrors = () => (dispatch) => {
   dispatch(Certificateslice.actions.clearAllErrors());
 };
 
-export const resetCertificateslice = () => (dispatch) => {
+export const resetCertificatesSlice = () => (dispatch) => {
   dispatch(Certificateslice.actions.resetCertificateslice());
 };
 

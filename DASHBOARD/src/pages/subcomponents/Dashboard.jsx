@@ -32,7 +32,7 @@ import { toast } from "react-toastify";
 import SpecialLoadingButton from "./SpecialLoadingButton";
 import { clearAllTimelineErrors } from "@/store/slices/timelineSlice";
 import { clearAllProjectErrors } from "@/store/slices/projectSlice";
-import { addNewCertificate, clearAllCertificateErrors, getAllCertificatess, resetCertificatesSlice } from "@/store/slices/certificateSlice";
+import { addNewCertificate, clearAllCertificateErrors, getAllCertificates, resetCertificatesSlice } from "@/store/slices/certificateSlice";
 
 const Dashboard = () => {
   const navigateTo = useNavigate();
@@ -78,8 +78,8 @@ const Dashboard = () => {
     if (certificateMessage) {
       toast.success(certificateMessage);
       setAppId(null);
-      dispatch(resetSoftwareApplicationSlice());
-      dispatch(getAllSoftwareApplications());
+      dispatch(resetCertificatesSlice());
+      dispatch(getAllCertificates());
     }
     if (timelineError) {
       toast.error(timelineError);
@@ -92,6 +92,8 @@ const Dashboard = () => {
     projectError,
     appMessage,
     timelineError,
+    certificateError,
+    certificateMessage
   ]);
 
   return (

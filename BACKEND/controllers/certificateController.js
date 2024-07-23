@@ -6,18 +6,17 @@ import { v2 as cloudinary } from "cloudinary";
 // Add a new certificate
 export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
-    return next(new ErrorHandler(" Certificate Image Required!", 404));
+    return next(new ErrorHandler("Certificate Image Required!", 404));
   }
-  
+
   const { img } = req.files;
-  const { name } = req.body;
-  const{organizationName}=req.body;
+  const { name, organizationName } = req.body;
 
   if (!name) {
     return next(new ErrorHandler("Please Provide Certificate's Name!", 400));
   }
   if (!organizationName) {
-    return next(new ErrorHandler("Please Provide Issued Organization  Name!", 400));
+    return next(new ErrorHandler("Please Provide Issued Organization Name!", 400));
   }
 
   try {
@@ -32,11 +31,11 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
     }
 
     const query = `
-      INSERT INTO certificates (name, organization_name , img_public_id, img_url)
-      VALUES ($1, $2, $3,$4)
+      INSERT INTO certificates (name, organization_name, img_public_id, img_url)
+      VALUES ($1, $2, $3, $4)
       RETURNING *;
     `;
-    const values = [name, cloudinaryResponse.public_id, cloudinaryResponse.secure_url];
+    const values = [name, organizationName, cloudinaryResponse.public_id, cloudinaryResponse.secure_url];
 
     const result = await db.query(query, values);
     const certificate = result.rows[0];
@@ -50,6 +49,7 @@ export const addNewCertificate = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Failed to add certificate: " + error.message, 500));
   }
 });
+
 
 // Delete a certificate
 export const deleteCertificate = catchAsyncErrors(async (req, res, next) => {

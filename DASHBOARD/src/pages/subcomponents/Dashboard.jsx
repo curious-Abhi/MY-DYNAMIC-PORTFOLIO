@@ -32,18 +32,22 @@ import { toast } from "react-toastify";
 import SpecialLoadingButton from "./SpecialLoadingButton";
 import { clearAllTimelineErrors } from "@/store/slices/timelineSlice";
 import { clearAllProjectErrors } from "@/store/slices/projectSlice";
-import { addNewCertificate, clearAllCertificateErrors, getAllCertificates, resetCertificatesSlice } from "@/store/slices/certificateSlice";
+import { clearAllCertificateErrors, getAllCertificates, resetCertificatesSlice } from "@/store/slices/certificateSlice";
+
 
 const Dashboard = () => {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
   
+
+
   const { user } = useSelector((state) => state.user);
+
   const { skills, loading: skillLoading, error: skillError, message: skillMessage } = useSelector((state) => state.skills);
+  const { projects, error: projectError } = useSelector((state) => state.project);
   const { softwareApplications, loading: appLoading, error: appError, message: appMessage } = useSelector((state) => state.softwareApplication);
   const { timeline, loading: timelineLoading, error: timelineError, message: timelineMessage } = useSelector((state) => state.timeline);
-  const { projects, error: projectError } = useSelector((state) => state.project);
-  const {certificates, loading: certificateLoading ,error:certificateError, message: certificateMessage}=useSelector((state)=>state.certificates)
+  const { certificates, loading: certificateLoading, error: certificateError, message: certificateMessage } = useSelector((state) => state.certificates) || {};
 
   const [appId, setAppId] = useState(null);
 
@@ -154,7 +158,7 @@ const Dashboard = () => {
                     <TableBody>
                       {projects && projects.length > 0 ? (
                         projects.map((element) => (
-                          <TableRow className="bg-accent"key={element.id}>
+                          <TableRow className="bg-accent" key={element.id}>
                             <TableCell>
                               <div className="font-medium">{element.title}</div>
                             </TableCell>
@@ -193,16 +197,14 @@ const Dashboard = () => {
                   </CardHeader>
                   <CardContent className="grid sm:grid-cols-2 gap-4">
                     {skills && skills.length > 0 ? (
-                      skills.map((element) => {
-                        return (
-                          <Card key={element.id}>
-                            <CardHeader>{element.title}</CardHeader>
-                            <CardFooter>
-                              <Progress value={element.proficiency} />
-                            </CardFooter>
-                          </Card>
-                        );
-                      })
+                      skills.map((element) => (
+                        <Card key={element.id}>
+                          <CardHeader>{element.title}</CardHeader>
+                          <CardFooter>
+                            <Progress value={element.proficiency} />
+                          </CardFooter>
+                        </Card>
+                      ))
                     ) : (
                       <p className="text-3xl">You have not added any skill.</p>
                     )}
@@ -252,6 +254,47 @@ const Dashboard = () => {
                 </CardContent>
               </Card>
               <Card>
+                <CardHeader className="px-7">
+                  <CardTitle>Certifications</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead className="hidden md:table-cell">Image</TableHead>
+                        <TableHead className="hidden md:table-cell">Delete</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {certificates && certificates.length > 0 ? (
+                        certificates.map((element) => (
+                          <TableRow className="bg-accent" key={element.id}>
+                            <TableCell>
+                              <div className="font-medium">{element.name}</div>
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              <Avatar className="h-16 w-16" src={element.img} alt="element_icon" />
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              <Button onClick={() => handleDeleteSoftwareApp(element.id)}>Delete</Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell className="text-3xl overflow-y-hidden">You have not added any certificates.</TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+          <Tabs>
+              <TabsContent>
+              <Card>
                 <CardHeader className="px-7 flex items-center justify-between flex-row">
                   <CardTitle>Timeline</CardTitle>
                   <Button onClick={() => navigateTo("/manage/timeline")} className="w-fit">Manage Timeline</Button>
@@ -283,12 +326,13 @@ const Dashboard = () => {
                   </Table>
                 </CardContent>
               </Card>
-            </TabsContent>
-          </Tabs>
+              </TabsContent>
+            </Tabs>
         </div>
       </main>
     </div>
   );
 };
+
 
 export default Dashboard;

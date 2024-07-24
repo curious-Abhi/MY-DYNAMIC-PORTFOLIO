@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import SpecialLoadingButton from "./SpecialLoadingButton";
-import { addNewCertificate, clearAllCertificateErrors, getAllCertificatess, resetCertificatesSlice } from "@/store/slices/certificateSlice";
+import { addNewCertificate, clearAllCertificateErrors, getAllCertificates, resetCertificatesSlice } from "@/store/slices/certificateSlice";
 
 const AddCertificates = () => {
   const [name, setName] = useState("");
@@ -49,7 +49,7 @@ const AddCertificates = () => {
     if (message) {
       toast.success(message);
       dispatch(resetCertificatesSlice());
-      dispatch(getAllCertificatess());
+      dispatch(getAllCertificates());
       setName("");
       setImg(null);
       setImgPreview("");

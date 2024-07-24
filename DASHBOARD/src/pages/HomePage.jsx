@@ -147,10 +147,10 @@ const HomePage = () => {
                     onClick={() => setActive("Add Certificate")}
                   >
                     <LayoutGrid className="h-5 w-5" />
-                    <span className="sr-only">Add Application</span>
+                    <span className="sr-only">Add Certificate</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Add Application</TooltipContent>
+                <TooltipContent side="right">Add Certificate</TooltipContent>
               </Tooltip>
             </TooltipProvider>
 

@@ -31,6 +31,7 @@ import AddSoftwareApplications from "./subcomponents/AddSoftwareApplications";
 import Account from "./subcomponents/Account";
 import Messages from "./subcomponents/Messages";
 import AddTimeline from "./subcomponents/AddTimeline";
+import AddCertificates from "./subcomponents/AddCertificate";
 
 const HomePage = () => {
   const [ active, setActive ] = useState("Dashboard");

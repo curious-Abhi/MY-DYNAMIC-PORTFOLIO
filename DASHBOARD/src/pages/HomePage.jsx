@@ -32,7 +32,7 @@ import Account from "./subcomponents/Account";
 import Messages from "./subcomponents/Messages";
 import AddTimeline from "./subcomponents/AddTimeline";
 import AddCertificates from "./subcomponents/AddCertificate";
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus } from "react-icons/fa";
 
 const HomePage = () => {
   const [active, setActive] = useState("Dashboard");
@@ -135,25 +135,25 @@ const HomePage = () => {
               <TooltipContent side="right">Add Application</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-         
+
           <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Link
-          className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-            active === "Add Certificate"
-              ? "text-accent-foreground bg-accent"
-              : "text-muted-foreground"
-          } transition-colors hover:text-foreground md:h-8 md:w-8`}
-          onClick={() => setActive("Add Certificate")}
-        >
-          <FaPlus className="h-5 w-5" />
-          <span className="sr-only">Add Certificate</span>
-        </Link>
-      </TooltipTrigger>
-      <TooltipContent side="right">Add Certificate</TooltipContent>
-    </Tooltip>
-  </TooltipProvider>     
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
+                    active === "Add Certificate"
+                      ? "text-accent-foreground bg-accent"
+                      : "text-muted-foreground"
+                  } transition-colors hover:text-foreground md:h-8 md:w-8`}
+                  onClick={() => setActive("Add Certificate")}
+                >
+                  <FaPlus className="h-5 w-5" />
+                  <span className="sr-only">Add Certificate</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Add Certificate</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
 
           <TooltipProvider>
             <Tooltip>
@@ -384,38 +384,3 @@ const HomePage = () => {
 
 export default HomePage;
 
-/*
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import { Button } from '@/components/ui/button'
-import { clearAllUsersErrors, logout } from '@/store/slices/userSlice'
-
-const HomePage = () => {
-  const dispatch = useDispatch();
-  const { error, message } = useSelector((state) => state.user);
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearAllUsersErrors());
-    }
-    if (message) {
-      toast.success(message);
-    }
-  }, [error, message, dispatch]);
-
-  return (
-    <>
-      <Button onClick={handleLogout}>Logout</Button>
-    </>
-  );
-};
-
-export default HomePage;
-
-*/

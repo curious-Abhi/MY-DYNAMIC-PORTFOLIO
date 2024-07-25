@@ -84,7 +84,7 @@ export const getAllCertificates = () => async (dispatch) => {
   dispatch(getAllCertificatesRequest());
   try {
     const response = await axios.get(
-      "http://localhost:4000/api/v1/softwareapplication/getall",
+      "http://localhost:4000/api/v1/certificate/getall",
       { withCredentials: true }
     );
     dispatch(getAllCertificatesSuccess(response.data.certificates)); // Ensure the payload is correct
@@ -98,7 +98,7 @@ export const addNewCertificate = (formdata) => async (dispatch) => {
   dispatch(addNewCertificatesRequest());
   try {
     const response = await axios.post(
-      "http://localhost:4000/api/v1/softwareapplication/add",
+      "http://localhost:4000/api/v1/certificate/add",
       formdata,
       {
         withCredentials: true,
@@ -116,7 +116,7 @@ export const deleteCertificate = (id) => async (dispatch) => {
   dispatch(deleteCertificatesRequest());
   try {
     const response = await axios.delete(
-      `http://localhost:4000/api/v1/softwareapplication/delete/${id}`,
+      `http://localhost:4000/api/v1/certificate/delete/${id}`,
       { withCredentials: true }
     );
     dispatch(deleteCertificatesSuccess(response.data.message));

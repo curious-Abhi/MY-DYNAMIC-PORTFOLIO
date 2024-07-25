@@ -32,22 +32,45 @@ import { toast } from "react-toastify";
 import SpecialLoadingButton from "./SpecialLoadingButton";
 import { clearAllTimelineErrors } from "@/store/slices/timelineSlice";
 import { clearAllProjectErrors } from "@/store/slices/projectSlice";
-import { clearAllCertificateErrors, getAllCertificates, resetCertificatesSlice } from "@/store/slices/certificateSlice";
-
+import {
+  clearAllCertificateErrors,
+  getAllCertificates,
+  resetCertificatesSlice,
+} from "@/store/slices/certificateSlice";
 
 const Dashboard = () => {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
-  
-
 
   const { user } = useSelector((state) => state.user);
 
-  const { skills, loading: skillLoading, error: skillError, message: skillMessage } = useSelector((state) => state.skills);
-  const { projects, error: projectError } = useSelector((state) => state.project);
-  const { softwareApplications, loading: appLoading, error: appError, message: appMessage } = useSelector((state) => state.softwareApplication);
-  const { timeline, loading: timelineLoading, error: timelineError, message: timelineMessage } = useSelector((state) => state.timeline);
-  const { certificates, loading: certificateLoading, error: certificateError, message: certificateMessage } = useSelector((state) => state.certificates) || {};
+  const {
+    skills,
+    loading: skillLoading,
+    error: skillError,
+    message: skillMessage,
+  } = useSelector((state) => state.skills);
+  const { projects, error: projectError } = useSelector(
+    (state) => state.project
+  );
+  const {
+    softwareApplications,
+    loading: appLoading,
+    error: appError,
+    message: appMessage,
+  } = useSelector((state) => state.softwareApplication);
+  const {
+    timeline,
+    loading: timelineLoading,
+    error: timelineError,
+    message: timelineMessage,
+  } = useSelector((state) => state.timeline);
+  const {
+    certificates,
+    loading: certificateLoading,
+    error: certificateError,
+    message: certificateMessage,
+  } = useSelector((state) => state.certificates) || {};
 
   const [appId, setAppId] = useState(null);
 
@@ -97,7 +120,7 @@ const Dashboard = () => {
     appMessage,
     timelineError,
     certificateError,
-    certificateMessage
+    certificateMessage,
   ]);
 
   return (
@@ -118,23 +141,23 @@ const Dashboard = () => {
             <Card className="flex flex-col justify-center">
               <CardHeader className="pb-2">
                 <CardTitle>Projects Completed</CardTitle>
-                <CardTitle className="text-6xl">
-                  {projects.length}
-                </CardTitle>
+                <CardTitle className="text-6xl">{projects.length}</CardTitle>
               </CardHeader>
               <CardFooter>
-                <Button onClick={() => navigateTo("/manage/projects")}>Manage Projects</Button>
+                <Button onClick={() => navigateTo("/manage/projects")}>
+                  Manage Projects
+                </Button>
               </CardFooter>
             </Card>
             <Card className="flex flex-col justify-center">
               <CardHeader className="pb-2">
                 <CardTitle>Skills</CardTitle>
-                <CardTitle className="text-6xl">
-                  {skills.length}
-                </CardTitle>
+                <CardTitle className="text-6xl">{skills.length}</CardTitle>
               </CardHeader>
               <CardFooter>
-                <Button onClick={() => navigateTo("/manage/skills")}>Manage Skills</Button>
+                <Button onClick={() => navigateTo("/manage/skills")}>
+                  Manage Skills
+                </Button>
               </CardFooter>
             </Card>
           </div>
@@ -149,8 +172,12 @@ const Dashboard = () => {
                     <TableHeader>
                       <TableRow>
                         <TableHead>Title</TableHead>
-                        <TableHead className="hidden md:table-cell">Stack</TableHead>
-                        <TableHead className="hidden md:table-cell">Deployed</TableHead>
+                        <TableHead className="hidden md:table-cell">
+                          Stack
+                        </TableHead>
+                        <TableHead className="hidden md:table-cell">
+                          Deployed
+                        </TableHead>
                         <TableHead className="md:table-cell">Update</TableHead>
                         <TableHead className="text-right">Visit</TableHead>
                       </TableRow>
@@ -162,9 +189,13 @@ const Dashboard = () => {
                             <TableCell>
                               <div className="font-medium">{element.title}</div>
                             </TableCell>
-                            <TableCell className="hidden md:table-cell">{element.stack}</TableCell>
                             <TableCell className="hidden md:table-cell">
-                              <Badge className="text-xs" variant="secondary">{element.deployed}</Badge>
+                              {element.stack}
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              <Badge className="text-xs" variant="secondary">
+                                {element.deployed}
+                              </Badge>
                             </TableCell>
                             <TableCell className="md:table-cell">
                               <Link to={`/update/project/${element.id}`}>
@@ -180,7 +211,9 @@ const Dashboard = () => {
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell className="text-3xl overflow-y-hidden">You have not added any project.</TableCell>
+                          <TableCell className="text-3xl overflow-y-hidden">
+                            You have not added any project.
+                          </TableCell>
                         </TableRow>
                       )}
                     </TableBody>
@@ -190,28 +223,28 @@ const Dashboard = () => {
             </TabsContent>
           </Tabs>
           <Tabs>
-              <TabsContent>
-                <Card>
-                  <CardHeader className="px-7 gap-3">
-                    <CardTitle>Skills</CardTitle>
-                  </CardHeader>
-                  <CardContent className="grid sm:grid-cols-2 gap-4">
-                    {skills && skills.length > 0 ? (
-                      skills.map((element) => (
-                        <Card key={element.id}>
-                          <CardHeader>{element.title}</CardHeader>
-                          <CardFooter>
-                            <Progress value={element.proficiency} />
-                          </CardFooter>
-                        </Card>
-                      ))
-                    ) : (
-                      <p className="text-3xl">You have not added any skill.</p>
-                    )}
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+            <TabsContent>
+              <Card>
+                <CardHeader className="px-7 gap-3">
+                  <CardTitle>Skills</CardTitle>
+                </CardHeader>
+                <CardContent className="grid sm:grid-cols-2 gap-4">
+                  {skills && skills.length > 0 ? (
+                    skills.map((element) => (
+                      <Card key={element.id}>
+                        <CardHeader>{element.title}</CardHeader>
+                        <CardFooter>
+                          <Progress value={element.proficiency} />
+                        </CardFooter>
+                      </Card>
+                    ))
+                  ) : (
+                    <p className="text-3xl">You have not added any skill.</p>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
           <Tabs>
             <TabsContent className="grid min-[1050px]:grid-cols-2 gap-4">
               <Card>
@@ -224,29 +257,49 @@ const Dashboard = () => {
                       <TableRow>
                         <TableHead>Name</TableHead>
                         <TableHead className="md:table-cell">Icon</TableHead>
-                        <TableHead className="md:table-cell text-center">Action</TableHead>
+                        <TableHead className="md:table-cell text-center">
+                          Action
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {softwareApplications && softwareApplications.length > 0 ? (
+                      {softwareApplications &&
+                      softwareApplications.length > 0 ? (
                         softwareApplications.map((element) => (
-                          <TableRow className="bg-accent"  key={element.id}>
-                            <TableCell className="font-medium">{element.name}</TableCell>
+                          <TableRow className="bg-accent" key={element.id}>
+                            <TableCell className="font-medium">
+                              {element.name}
+                            </TableCell>
                             <TableCell className="md:table-cell">
-                              <img className="w-7 h-7" src={element.svg_url} alt={element.name} />
+                              <img
+                                className="w-7 h-7"
+                                src={element.svg_url}
+                                alt={element.name}
+                              />
                             </TableCell>
                             <TableCell className="md:table-cell text-center">
                               {appLoading && appId === element.id ? (
-                                <SpecialLoadingButton content="Deleting" width="w-fit" />
+                                <SpecialLoadingButton
+                                  content="Deleting"
+                                  width="w-fit"
+                                />
                               ) : (
-                                <Button onClick={() => handleDeleteSoftwareApp(element.id)}>Delete</Button>
+                                <Button
+                                  onClick={() =>
+                                    handleDeleteSoftwareApp(element.id)
+                                  }
+                                >
+                                  Delete
+                                </Button>
                               )}
                             </TableCell>
                           </TableRow>
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell className="text-3xl overflow-y-hidden">You have not added any software application.</TableCell>
+                          <TableCell className="text-3xl overflow-y-hidden">
+                            You have not added any software application.
+                          </TableCell>
                         </TableRow>
                       )}
                     </TableBody>
@@ -256,7 +309,12 @@ const Dashboard = () => {
               <Card>
                 <CardHeader className="px-7 flex items-center justify-between flex-row">
                   <CardTitle>Timeline</CardTitle>
-                  <Button onClick={() => navigateTo("/manage/timeline")} className="w-fit">Manage Timeline</Button>
+                  <Button
+                    onClick={() => navigateTo("/manage/timeline")}
+                    className="w-fit"
+                  >
+                    Manage Timeline
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -264,21 +322,31 @@ const Dashboard = () => {
                       <TableRow>
                         <TableHead>Title</TableHead>
                         <TableHead className="md:table-cell">From</TableHead>
-                        <TableHead className="md:table-cell text-right">To</TableHead>
+                        <TableHead className="md:table-cell text-right">
+                          To
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {timeline && timeline.length > 0 ? (
                         timeline.map((element) => (
                           <TableRow className="bg-accent" key={element.id}>
-                            <TableCell className="font-medium">{element.title}</TableCell>
-                            <TableCell className="md:table-cell">{element.from_year}</TableCell>
-                            <TableCell className="md:table-cell text-right">{element.to_year}</TableCell>
+                            <TableCell className="font-medium">
+                              {element.title}
+                            </TableCell>
+                            <TableCell className="md:table-cell">
+                              {element.from_year}
+                            </TableCell>
+                            <TableCell className="md:table-cell text-right">
+                              {element.to_year}
+                            </TableCell>
                           </TableRow>
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell className="text-3xl overflow-y-hidden">You have not added any timeline.</TableCell>
+                          <TableCell className="text-3xl overflow-y-hidden">
+                            You have not added any timeline.
+                          </TableCell>
                         </TableRow>
                       )}
                     </TableBody>
@@ -287,13 +355,10 @@ const Dashboard = () => {
               </Card>
             </TabsContent>
           </Tabs>
-
-          
         </div>
       </main>
     </div>
   );
 };
-
 
 export default Dashboard;

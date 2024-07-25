@@ -35,7 +35,7 @@ import { clearAllProjectErrors } from "@/store/slices/projectSlice";
 import {
   clearAllCertificateErrors,
   getAllCertificates,
-  resetCertificatesSlice,
+  resetCertificateStateAction,
 } from "@/store/slices/certificateSlice";
 import AddCertificates from "./AddCertificate";
 const Dashboard = () => {
@@ -71,12 +71,18 @@ const Dashboard = () => {
     error: certificateError,
     message: certificateMessage,
   } = useSelector((state) => state.certificates) || {};
+ 
 
   const [appId, setAppId] = useState(null);
 
   const handleDeleteSoftwareApp = (id) => {
     setAppId(id);
     dispatch(deleteSoftwareApplication(id));
+  };
+
+  const [showAddCertificates, setShowAddCertificates] = useState(false);
+  const handleAddButtonClick = () => {
+    setShowAddCertificates(true);
   };
 
   useEffect(() => {
@@ -105,7 +111,7 @@ const Dashboard = () => {
     if (certificateMessage) {
       toast.success(certificateMessage);
       setAppId(null);
-      dispatch(resetCertificatesSlice());
+      dispatch(resetCertificateStateAction ());
       dispatch(getAllCertificates());
     }
     if (timelineError) {
@@ -361,9 +367,8 @@ const Dashboard = () => {
               <CardTitle>
                 Certifications
                 <span className="ml-2">
-                  <Button onClick={() => setActive("Add Certificate")}>
-                    Add
-                  </Button>
+                <Button onClick={handleAddButtonClick}>Add</Button>
+                {showAddCertificates && <AddCertificates />}
                 </span>
               </CardTitle>
             </CardHeader>

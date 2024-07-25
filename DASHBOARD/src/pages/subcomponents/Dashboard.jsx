@@ -37,7 +37,7 @@ import {
   getAllCertificates,
   resetCertificatesSlice,
 } from "@/store/slices/certificateSlice";
-
+import AddCertificates from "./AddCertificate";
 const Dashboard = () => {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
@@ -78,9 +78,6 @@ const Dashboard = () => {
     setAppId(id);
     dispatch(deleteSoftwareApplication(id));
   };
-
-  
-  
 
   useEffect(() => {
     if (skillError) {
@@ -360,42 +357,63 @@ const Dashboard = () => {
           </Tabs>
 
           <Card>
-                <CardHeader className="px-7">
-                  <CardTitle>Certifications</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Name</TableHead>
-                        <TableHead className="hidden md:table-cell">Image</TableHead>
-                        <TableHead className="hidden md:table-cell">Delete</TableHead>
+            <CardHeader className="px-7">
+              <CardTitle>
+                Certifications
+                <span className="ml-2">
+                  <Button onClick={() => setActive("Add Certificate")}>
+                    Add
+                  </Button>
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead className="hidden md:table-cell">
+                      Image
+                    </TableHead>
+                    <TableHead className="hidden md:table-cell">
+                      Delete
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {certificates && certificates.length > 0 ? (
+                    certificates.map((element) => (
+                      <TableRow className="bg-accent" key={element.id}>
+                        <TableCell>
+                          <div className="font-medium">{element.name}</div>
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">
+                          <Avatar
+                            className="h-16 w-16"
+                            src={element.img}
+                            alt="element_icon"
+                          />
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">
+                          <Button
+                            onClick={() => handleDeleteSoftwareApp(element.id)}
+                          >
+                            Delete
+                          </Button>
+                        </TableCell>
                       </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {certificates && certificates.length > 0 ? (
-                        certificates.map((element) => (
-                          <TableRow className="bg-accent" key={element.id}>
-                            <TableCell>
-                              <div className="font-medium">{element.name}</div>
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              <Avatar className="h-16 w-16" src={element.img} alt="element_icon" />
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              <Button onClick={() => handleDeleteSoftwareApp(element.id)}>Delete</Button>
-                            </TableCell>
-                          </TableRow>
-                        ))
-                      ) : (
-                        <TableRow>
-                          <TableCell className="text-3xl overflow-y-hidden">You have not added any certificates.</TableCell>
-                        </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell className="text-3xl overflow-y-hidden">
+                        You have not added any certificates.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>

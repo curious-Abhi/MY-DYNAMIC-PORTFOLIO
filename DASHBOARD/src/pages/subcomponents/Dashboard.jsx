@@ -79,6 +79,9 @@ const Dashboard = () => {
     dispatch(deleteSoftwareApplication(id));
   };
 
+  
+  
+
   useEffect(() => {
     if (skillError) {
       toast.error(skillError);
@@ -355,6 +358,44 @@ const Dashboard = () => {
               </Card>
             </TabsContent>
           </Tabs>
+
+          <Card>
+                <CardHeader className="px-7">
+                  <CardTitle>Certifications</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead className="hidden md:table-cell">Image</TableHead>
+                        <TableHead className="hidden md:table-cell">Delete</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {certificates && certificates.length > 0 ? (
+                        certificates.map((element) => (
+                          <TableRow className="bg-accent" key={element.id}>
+                            <TableCell>
+                              <div className="font-medium">{element.name}</div>
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              <Avatar className="h-16 w-16" src={element.img} alt="element_icon" />
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              <Button onClick={() => handleDeleteSoftwareApp(element.id)}>Delete</Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell className="text-3xl overflow-y-hidden">You have not added any certificates.</TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
         </div>
       </main>
     </div>

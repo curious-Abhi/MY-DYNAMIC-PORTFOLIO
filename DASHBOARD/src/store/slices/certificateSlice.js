@@ -11,7 +11,6 @@ const certificateSlice = createSlice({
   },
   reducers: {
     getAllCertificatesRequest(state) {
-      console.log("getAllCertificatesRequest dispatched");
       state.certificates = [];
       state.error = null;
       state.loading = true;
@@ -22,11 +21,10 @@ const certificateSlice = createSlice({
       state.loading = false;
     },
     getAllCertificatesFailed(state, action) {
-      state.certificates=state.certificates;
       state.error = action.payload;
       state.loading = false;
     },
-    addNewCertificateRequest(state,action) {
+    addNewCertificateRequest(state) {
       state.loading = true;
       state.error = null;
       state.message = null;
@@ -56,15 +54,13 @@ const certificateSlice = createSlice({
       state.loading = false;
       state.message = null;
     },
-    resetCertificateState(state) { 
+    resetCertificateState(state) {
       state.error = null;
-      state.certificates = state.certificates;
       state.message = null;
       state.loading = false;
     },
     clearAllErrors(state) {
       state.error = null;
-      state.certificates=state.certificates;
     },
   },
 });
@@ -83,23 +79,22 @@ export const {
   clearAllErrors,
 } = certificateSlice.actions;
 
-
 export const getAllCertificates = () => async (dispatch) => {
-  dispatch(certificateSlice.actions.getAllCertificatesRequest());
+  dispatch(getAllCertificatesRequest());
   try {
     const response = await axios.get(
       "http://localhost:4000/api/v1/certificate/getall",
       { withCredentials: true }
     );
-    dispatch(certificateSlice.actions.getAllCertificatesSuccess(response.data.certificates));
+    dispatch(getAllCertificatesSuccess(response.data.certificates));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(certificateSlice.actions.getAllCertificatesFailed(error.response.data.message));
+    dispatch(getAllCertificatesFailed(error.response.data.message));
   }
 };
 
 export const addNewCertificate = (formData) => async (dispatch) => {
-  dispatch(certificateSlice.actions.addNewCertificateRequest());
+  dispatch(addNewCertificateRequest());
   try {
     const response = await axios.post(
       "http://localhost:4000/api/v1/certificate/add",
@@ -109,33 +104,33 @@ export const addNewCertificate = (formData) => async (dispatch) => {
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
-    dispatch(certificateSlice.actions.addNewCertificateSuccess(response.data.message));
-    dispatch(certificateSlice.actions.clearAllErrors());
+    dispatch(addNewCertificateSuccess(response.data.message));
+    dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(certificateSlice.actions.addNewCertificateFailed(error.response.data.message));
+    dispatch(addNewCertificateFailed(error.response.data.message));
   }
 };
 
 export const deleteCertificate = (id) => async (dispatch) => {
-  dispatch(certificateSlice.actions.deleteCertificateRequest());
+  dispatch(deleteCertificateRequest());
   try {
     const response = await axios.delete(
       `http://localhost:4000/api/v1/certificate/delete/${id}`,
       { withCredentials: true }
     );
-    dispatch(certificateSlice.actions.deleteCertificateSuccess(response.data.message));
-    dispatch(certificateSlice.actions.clearAllErrors());
+    dispatch(deleteCertificateSuccess(response.data.message));
+    dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(certificateSlice.actions.deleteCertificateFailed(error.response.data.message));
+    dispatch(deleteCertificateFailed(error.response.data.message));
   }
 };
 
 export const clearAllCertificateErrors = () => (dispatch) => {
-  dispatch(certificateSlice.actions.clearAllErrors());
+  dispatch(clearAllErrors());
 };
 
-export const resetCertificateStateAction = () => (dispatch) => { 
-  dispatch(certificateSlice.actions.resetCertificateState());
+export const resetCertificateStateAction = () => (dispatch) => {
+  dispatch(resetCertificateState());
 };
 
 export default certificateSlice.reducer;

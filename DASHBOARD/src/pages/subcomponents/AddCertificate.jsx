@@ -6,7 +6,7 @@ import SpecialLoadingButton from "./SpecialLoadingButton";
 import { addNewCertificate, clearAllCertificateErrors, getAllCertificates, resetCertificateStateAction } from "@/store/slices/certificateSlice";
 
 const AddCertificates = () => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState(" ");
   const [img_url, setImg] = useState(null);
   const [imgPreview, setImgPreview] = useState("");
 
@@ -20,10 +20,9 @@ const AddCertificates = () => {
     };
   };
 
-  const { loading, error, message } = useSelector(
-    (state) => state.certificate
+  const {loading, error, message } = useSelector(
+    (state) => state.certificates
   );
-
   const dispatch = useDispatch();
   
   const handleAddCertificate = (e) => {

@@ -11,6 +11,7 @@ const certificateSlice = createSlice({
   },
   reducers: {
     getAllCertificatesRequest(state) {
+      console.log("getAllCertificatesRequest dispatched");
       state.certificates = [];
       state.error = null;
       state.loading = true;
@@ -21,10 +22,11 @@ const certificateSlice = createSlice({
       state.loading = false;
     },
     getAllCertificatesFailed(state, action) {
+      state.certificates=state.certificates;
       state.error = action.payload;
       state.loading = false;
     },
-    addNewCertificateRequest(state) {
+    addNewCertificateRequest(state,action) {
       state.loading = true;
       state.error = null;
       state.message = null;
@@ -56,12 +58,13 @@ const certificateSlice = createSlice({
     },
     resetCertificateState(state) { 
       state.error = null;
-      state.certificates = [];
+      state.certificates = state.certificates;
       state.message = null;
       state.loading = false;
     },
     clearAllErrors(state) {
       state.error = null;
+      state.certificates=state.certificates;
     },
   },
 });
@@ -76,26 +79,27 @@ export const {
   deleteCertificateRequest,
   deleteCertificateSuccess,
   deleteCertificateFailed,
-  resetCertificateState, // Updated to match the renamed reducer
+  resetCertificateState,
   clearAllErrors,
 } = certificateSlice.actions;
 
+
 export const getAllCertificates = () => async (dispatch) => {
-  dispatch(getAllCertificatesRequest());
+  dispatch(certificateSlice.actions.getAllCertificatesRequest());
   try {
     const response = await axios.get(
       "http://localhost:4000/api/v1/certificate/getall",
       { withCredentials: true }
     );
-    dispatch(getAllCertificatesSuccess(response.data.certificates));
+    dispatch(certificateSlice.actions.getAllCertificatesSuccess(response.data.certificates));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(getAllCertificatesFailed(error.response.data.message));
+    dispatch(certificateSlice.actions.getAllCertificatesFailed(error.response.data.message));
   }
 };
 
 export const addNewCertificate = (formData) => async (dispatch) => {
-  dispatch(addNewCertificateRequest());
+  dispatch(certificateSlice.actions.addNewCertificateRequest());
   try {
     const response = await axios.post(
       "http://localhost:4000/api/v1/certificate/add",
@@ -105,33 +109,33 @@ export const addNewCertificate = (formData) => async (dispatch) => {
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
-    dispatch(addNewCertificateSuccess(response.data.message));
-    dispatch(clearAllErrors());
+    dispatch(certificateSlice.actions.addNewCertificateSuccess(response.data.message));
+    dispatch(certificateSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(addNewCertificateFailed(error.response.data.message));
+    dispatch(certificateSlice.actions.addNewCertificateFailed(error.response.data.message));
   }
 };
 
 export const deleteCertificate = (id) => async (dispatch) => {
-  dispatch(deleteCertificateRequest());
+  dispatch(certificateSlice.actions.deleteCertificateRequest());
   try {
     const response = await axios.delete(
       `http://localhost:4000/api/v1/certificate/delete/${id}`,
       { withCredentials: true }
     );
-    dispatch(deleteCertificateSuccess(response.data.message));
-    dispatch(clearAllErrors());
+    dispatch(certificateSlice.actions.deleteCertificateSuccess(response.data.message));
+    dispatch(certificateSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(deleteCertificateFailed(error.response.data.message));
+    dispatch(certificateSlice.actions.deleteCertificateFailed(error.response.data.message));
   }
 };
 
 export const clearAllCertificateErrors = () => (dispatch) => {
-  dispatch(clearAllErrors());
+  dispatch(certificateSlice.actions.clearAllErrors());
 };
 
-export const resetCertificateStateAction = () => (dispatch) => { // Renamed to avoid conflict
-  dispatch(resetCertificateState());
+export const resetCertificateStateAction = () => (dispatch) => { 
+  dispatch(certificateSlice.actions.resetCertificateState());
 };
 
 export default certificateSlice.reducer;

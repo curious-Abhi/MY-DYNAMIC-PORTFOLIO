@@ -35,9 +35,11 @@ import { clearAllProjectErrors } from "@/store/slices/projectSlice";
 import {
   clearAllCertificateErrors,
   getAllCertificates,
+  deleteCertificate,
   resetCertificateStateAction,
 } from "@/store/slices/certificateSlice";
 import AddCertificates from "./AddCertificate";
+
 const Dashboard = () => {
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
@@ -50,28 +52,34 @@ const Dashboard = () => {
     error: skillError,
     message: skillMessage,
   } = useSelector((state) => state.skills);
+
   const { projects, error: projectError } = useSelector(
     (state) => state.project
   );
+
   const {
     softwareApplications,
     loading: appLoading,
     error: appError,
     message: appMessage,
   } = useSelector((state) => state.softwareApplication);
+
   const {
     timeline,
     loading: timelineLoading,
     error: timelineError,
     message: timelineMessage,
   } = useSelector((state) => state.timeline);
+
   const {
-    certificates,
-    loading: certificateLoading,
+    loading,
     error: certificateError,
+    certificates,
     message: certificateMessage,
-  } = useSelector((state) => state.certificates) || {};
- 
+  } = useSelector((state) => state.certificates);
+
+  const state = useSelector((state) => state);
+  console.log(state);
 
   const [appId, setAppId] = useState(null);
 
@@ -80,7 +88,13 @@ const Dashboard = () => {
     dispatch(deleteSoftwareApplication(id));
   };
 
+  const handleDeleteCertificate = (id) => {
+    setAppId(id);
+    dispatch(deleteCertificate(id));
+  };
+
   const [showAddCertificates, setShowAddCertificates] = useState(false);
+
   const handleAddButtonClick = () => {
     setShowAddCertificates(true);
   };
@@ -111,7 +125,7 @@ const Dashboard = () => {
     if (certificateMessage) {
       toast.success(certificateMessage);
       setAppId(null);
-      dispatch(resetCertificateStateAction ());
+      dispatch(resetCertificateStateAction());
       dispatch(getAllCertificates());
     }
     if (timelineError) {
@@ -367,8 +381,8 @@ const Dashboard = () => {
               <CardTitle>
                 Certifications
                 <span className="ml-2">
-                <Button onClick={handleAddButtonClick}>Add</Button>
-                {showAddCertificates && <AddCertificates />}
+                  <Button onClick={handleAddButtonClick}>Add</Button>
+                  {showAddCertificates && <AddCertificates />}
                 </span>
               </CardTitle>
             </CardHeader>
@@ -401,7 +415,7 @@ const Dashboard = () => {
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
                           <Button
-                            onClick={() => handleDeleteSoftwareApp(element.id)}
+                            onClick={() => handleDeleteCertificate(element.id)}
                           >
                             Delete
                           </Button>

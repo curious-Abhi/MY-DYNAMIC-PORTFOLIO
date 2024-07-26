@@ -8,15 +8,15 @@ import softwareApplicationReducer from "./slices/softwareApplicationSlice";
 import projectReducer from "./slices/projectSlice";
 import certificateReducer from "./slices/certificateSlice";
 
-export const store=configureStore({
-    reducer:{
-        user:userSlice,
-        forgotPassword:forgotResetPasswordSlice,
-        messages:messageReducer,
-        timeline: timelineReducer,
-        skills:skillReducer,
-        softwareApplication:softwareApplicationReducer,
-        project:projectReducer,
-        certficates:certificateReducer,
-    }
-})
+export const store = configureStore({
+  reducer: {
+    user: userSlice,
+    forgotPassword: forgotResetPasswordSlice,
+    messages: messageReducer,
+    timeline: timelineReducer,
+    skills: skillReducer,
+    softwareApplication: softwareApplicationReducer,
+    project: projectReducer,
+    certificates: certificateReducer,  // Corrected here
+  },
+});

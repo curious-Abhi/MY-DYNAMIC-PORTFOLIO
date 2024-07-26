@@ -381,6 +381,14 @@ const Dashboard = () => {
                 <span className="ml-2">
                   <Button onClick={handleAddButtonClick}>Add</Button>
                 </span>
+                <span className="ml-2">
+                <Button 
+                    onClick={() => navigateTo("/manage/certificate")}
+                    className="w-fit"
+                  >
+                    Manage Certificate
+                  </Button>
+                </span>
               </CardTitle>
             </CardHeader>
             <CardContent>

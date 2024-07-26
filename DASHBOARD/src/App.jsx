@@ -18,6 +18,7 @@ import { getAllTimeline } from "./store/slices/timelineSlice";
 import { getAllSoftwareApplications } from "./store/slices/softwareApplicationSlice";
 import { getAllProjects } from "./store/slices/projectSlice";
 import AddCertificates from "./pages/subcomponents/AddCertificate";
+import ManageCertificate from "./pages/ManageCertificate";
 const App = () => {
 
   const dispatch=useDispatch();
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/view/project/:id" element={<ViewProject />} />
         <Route path="/update/project/:id" element={<UpdateProject />} />
         <Route path="/add-certificates" element={<AddCertificates />} />
+        <Route path="/manage/certificate" element={<ManageCertificate />} />
       </Routes>
       <ToastContainer position="bottom-right" theme="dark"/>
     </Router>

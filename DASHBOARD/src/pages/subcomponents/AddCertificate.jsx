@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Button } from "@/components/ui/button";
 import SpecialLoadingButton from "./SpecialLoadingButton";
-import { addNewCertificate, clearAllCertificateErrors, getAllCertificates, resetCertificateStateAction } from "@/store/slices/certificateSlice";
+import {
+  addNewCertificate,
+  clearAllCertificateErrors,
+  getAllCertificates,
+  resetCertificateStateAction
+} from "@/store/slices/certificateSlice";
 
 const AddCertificates = () => {
-  const [name, setName] = useState(" ");
+  const [name, setName] = useState("");
+  const [organization_name, setOrganization_name] = useState("");
   const [img_url, setImg] = useState(null);
   const [imgPreview, setImgPreview] = useState("");
+
+  const navigate = useNavigate(); // Initialize useNavigate
+  const dispatch = useDispatch();
 
   const handleImg = (e) => {
     const file = e.target.files[0];
@@ -20,11 +30,10 @@ const AddCertificates = () => {
     };
   };
 
-  const {loading, error, message } = useSelector(
+  const { loading, error, message } = useSelector(
     (state) => state.certificates
   );
-  const dispatch = useDispatch();
-  
+
   const handleAddCertificate = (e) => {
     e.preventDefault();
 
@@ -36,6 +45,7 @@ const AddCertificates = () => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("img", img_url);
+    formData.append("organizationName", organization_name);
 
     dispatch(addNewCertificate(formData));
   };
@@ -52,8 +62,9 @@ const AddCertificates = () => {
       setName("");
       setImg(null);
       setImgPreview("");
+      navigate("/"); // Redirect to Dashboard
     }
-  }, [dispatch, error, message]);
+  }, [dispatch, error, message, navigate]);
 
   return (
     <div className="flex justify-center items-center min-h-[100vh] sm:gap-4 sm:py-4 sm:pl-14">
@@ -79,6 +90,23 @@ const AddCertificates = () => {
                       placeholder="React.JS"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full sm:col-span-4">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Organization Name
+                </label>
+                <div className="mt-2">
+                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                    <input
+                      type="text"
+                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      placeholder="Udemy"
+                      value={organization_name}
+                      onChange={(e) => setOrganization_name(e.target.value)}
                     />
                   </div>
                 </div>

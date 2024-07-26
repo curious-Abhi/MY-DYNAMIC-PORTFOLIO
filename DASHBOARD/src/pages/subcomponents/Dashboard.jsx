@@ -78,8 +78,8 @@ const Dashboard = () => {
     message: certificateMessage,
   } = useSelector((state) => state.certificates);
 
-  const state = useSelector((state) => state);
-  console.log(state);
+  // const state = useSelector((state) => state);
+  // console.log(state);
 
   const [appId, setAppId] = useState(null);
 
@@ -93,10 +93,8 @@ const Dashboard = () => {
     dispatch(deleteCertificate(id));
   };
 
-  const [showAddCertificates, setShowAddCertificates] = useState(false);
-
   const handleAddButtonClick = () => {
-    setShowAddCertificates(true);
+    navigateTo("/add-certificates");
   };
 
   useEffect(() => {
@@ -382,7 +380,6 @@ const Dashboard = () => {
                 Certifications
                 <span className="ml-2">
                   <Button onClick={handleAddButtonClick}>Add</Button>
-                  {showAddCertificates && <AddCertificates />}
                 </span>
               </CardTitle>
             </CardHeader>
@@ -395,7 +392,7 @@ const Dashboard = () => {
                       Image
                     </TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Delete
+                      Action
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -409,7 +406,7 @@ const Dashboard = () => {
                         <TableCell className="hidden md:table-cell">
                           <Avatar
                             className="h-16 w-16"
-                            src={element.img}
+                            src={element.img_url}
                             alt="element_icon"
                           />
                         </TableCell>

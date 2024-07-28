@@ -415,7 +415,7 @@ const Dashboard = () => {
                           <Avatar
                             className="h-16 w-16"
                             src={element.img_url}
-                            alt="element_icon"
+                            alt={element.name}
                           />
                         </TableCell>
                         <TableCell className="hidden md:table-cell">

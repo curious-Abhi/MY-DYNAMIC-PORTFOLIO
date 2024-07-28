@@ -6,6 +6,7 @@ import Skills from './sub-components/Skills'
 import Portfolio from './sub-components/Portfolio'
 import MyApps from './sub-components/MyApps'
 import Contact from './sub-components/Contact'
+import Certificate from './sub-components/Certificate'
 
 
 const Home = () => {
@@ -16,7 +17,9 @@ const Home = () => {
         <About/>
         <Skills/>
         <Portfolio/>
+        <Certificate/>
         <MyApps/>
+
         <Contact/>
     </article>
   )

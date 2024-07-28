@@ -35,8 +35,7 @@ const About = () => {
            Passionate Computer Science Engineering Student | MERN | PERN | Futuristic AI Engineer
            </h2>
             <p>
-            I am a dedicated and enthusiastic third-year Computer Science and Engineering student with a drive to excel and make a difference. Currently pursuing a B.Tech degree. Fueled by a strong drive to
-									excel and make a meaningful impact, I bring a diverse skill set to the table
+             As a dedicated 3rd-year CSE student, I am expanding my expertise in Full Stack Development . I have developed multiple web apps using the PERN stack, contributed to open-source projects. Actively solving DSA problems in Java.
             </p>
           </div>
         </div>

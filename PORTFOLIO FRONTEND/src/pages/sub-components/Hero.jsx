@@ -50,7 +50,7 @@ const Hero = () => {
       </h1>
       <div className="w-fit px-5 py-2 bg-slate-50 rounded-[20px] flex gap-5 
       items-center mt-4 md:mt-8 lg:mt-10">
-        <Link to={"https://www.youtube.com/@CodeWithZeeshu"} target="_blank">
+        <Link to={"https://www.youtube.com/@curiousabhi550"} target="_blank">
           <Youtube className="text-red-500 w-7 h-7"/>
         </Link>
         <Link to={user.instagram_url} target="_blank">

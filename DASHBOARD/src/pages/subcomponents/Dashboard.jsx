@@ -382,7 +382,7 @@ const Dashboard = () => {
                   <Button onClick={handleAddButtonClick}>Add</Button>
                 </span>
                 <span className="ml-2">
-                <Button 
+                  <Button
                     onClick={() => navigateTo("/manage/certificate")}
                     className="w-fit"
                   >

@@ -77,7 +77,7 @@ export const {
   deleteCertificateFailed,
   resetCertificateState,
   clearAllErrors,
-} = certificateSlice.action
+} = certificateSlice.actions;
 
 export const getAllCertificates = () => async (dispatch) => {
   dispatch(getAllCertificatesRequest());

@@ -38,7 +38,8 @@ import {
   deleteCertificate,
   resetCertificateStateAction,
 } from "@/store/slices/certificateSlice";
-import AddCertificates from "./AddCertificate";
+import { Avatar } from "@/components/ui/avatar";
+import CertificatesComponent from "@/store/slices/getCertificate";
 
 const Dashboard = () => {
   const navigateTo = useNavigate();
@@ -92,7 +93,7 @@ const Dashboard = () => {
     setAppId(id);
     dispatch(deleteCertificate(id));
   };
-
+  
   const handleAddButtonClick = () => {
     navigateTo("/add-certificates");
   };
@@ -381,14 +382,6 @@ const Dashboard = () => {
                 <span className="ml-2">
                   <Button onClick={handleAddButtonClick}>Add</Button>
                 </span>
-                <span className="ml-2">
-                  <Button
-                    onClick={() => navigateTo("/manage/certificate")}
-                    className="w-fit"
-                  >
-                    Manage Certificate
-                  </Button>
-                </span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -438,6 +431,7 @@ const Dashboard = () => {
               </Table>
             </CardContent>
           </Card>
+          <CertificatesComponent/>
         </div>
       </main>
     </div>

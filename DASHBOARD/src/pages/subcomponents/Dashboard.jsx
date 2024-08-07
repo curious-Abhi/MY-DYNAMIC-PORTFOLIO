@@ -39,7 +39,8 @@ import {
   resetCertificateStateAction,
 } from "@/store/slices/certificateSlice";
 import { Avatar } from "@/components/ui/avatar";
-import CertificatesComponent from "@/store/slices/getCertificate";
+import CertificatesComponent from "../getcertificate";
+
 
 const Dashboard = () => {
   const navigateTo = useNavigate();
@@ -390,9 +391,6 @@ const Dashboard = () => {
                   <TableRow>
                     <TableHead>Name</TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Image
-                    </TableHead>
-                    <TableHead className="hidden md:table-cell">
                       Action
                     </TableHead>
                   </TableRow>
@@ -403,13 +401,6 @@ const Dashboard = () => {
                       <TableRow className="bg-accent" key={element.id}>
                         <TableCell>
                           <div className="font-medium">{element.name}</div>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          <Avatar
-                            className="h-16 w-16"
-                            src={element.img_url}
-                            alt={element.name}
-                          />
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
                           <Button
@@ -432,6 +423,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
           <CertificatesComponent/>
+          
         </div>
       </main>
     </div>

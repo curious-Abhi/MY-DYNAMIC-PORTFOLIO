@@ -13,16 +13,6 @@ export const postTimeline = catchAsyncErrors(async (req, res, next) => {
   if (!title || !description) {
     return next(new ErrorHandler('Title and description are required', 400));
   }
-
-  //  // Ensure the `from` and `to` are integers representing the year
-  //  const from_year = parseInt(from, 10);
-  //  const to_year = parseInt(to, 10);
- 
-  //  //console.log("Parsed years:", { from_year, to_year });
- 
-  //  if (isNaN(from_year) || isNaN(to_year)) {
-  //    return next(new ErrorHandler('Invalid year format', 400));
-  //  }
  
    if (from_year > to_year) {
      return next(new ErrorHandler('The starting year cannot be greater than the ending year', 400));

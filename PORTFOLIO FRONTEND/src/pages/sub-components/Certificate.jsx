@@ -17,7 +17,7 @@ const Certificate = () => {
                 "http://localhost:4000/api/v1/certificate/getall",
                 { withCredentials: true }
             );
-            console.log(data);
+            //console.log(data);
             setCertificates(data.certificates);
         };
         getMyCertificates();

@@ -139,6 +139,7 @@ const AddProject = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="Full Stack">Full Stack</SelectItem>
+                        <SelectItem value="Frontend">Frontend</SelectItem>
                         <SelectItem value="PERN">PERN</SelectItem>
                         <SelectItem value="MERN">MERN</SelectItem>
                         <SelectItem value="MEAN">MEAN</SelectItem>

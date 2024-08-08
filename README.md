@@ -10,8 +10,6 @@ Welcome to my full stack dynamic portfolio project! This project showcases my sk
 - [Setup Instructions](#setup-instructions)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 
@@ -42,19 +40,25 @@ This project is a dynamic portfolio built using the PERN stack (PostgreSQL, Expr
    ```bash
    git clone https://github.com/yourusername/dynamic-portfolio.git
    cd dynamic-portfolio
+   ```
 
 2.Install dependencies:
+```
 # For backend
 cd backend
 npm install
-
+```
+```
 # For frontend
 cd ../frontend
 npm install
+```
 
 3.Configure environment variables:
 
+
 Create a .env file in the backend directory with the following variables:
+```
 PORT=5000
 NODE_ENV=development
 JWT_SECRET_KEY=your_jwt_secret
@@ -68,6 +72,7 @@ EMAIL_SERVICE=your_email_service
 EMAIL_USER=your_email_user
 EMAIL_PASS=your_email_password
 DASHBOARD_URL=http://localhost:3000
+```
 
 
 4.Set up PostgreSQL database:
@@ -75,14 +80,15 @@ DASHBOARD_URL=http://localhost:3000
 Make sure PostgreSQL is installed and running. Create a new database and update the DATABASE_URL in the .env file accordingly.
 
 5.Run the backend:
+```
 cd backend
 npm run dev
-
+```
 
 Access the application:
 
 Open your browser and go to http://localhost:3000.
-
+```
 Usage
 Register a new user account.
 Log in to your account.
@@ -90,25 +96,35 @@ Update your profile with your avatar and resume.
 Add and manage your skills and projects.
 API Endpoints
 Authentication
+```
 POST /api/v1/auth/register: Register a new user
 POST /api/v1/auth/login: Log in a user
 POST /api/v1/auth/logout: Log out a user
+
 User Management
+```
 GET /api/v1/user: Get user profile
 PUT /api/v1/user/profile: Update user profile
 PUT /api/v1/user/password: Update user password
 POST /api/v1/auth/forgot-password: Forgot password
 PUT /api/v1/auth/reset-password/:token: Reset password
+```
 Skills Management
+```
 POST /api/v1/skills: Add a new skill
 GET /api/v1/skills: Get all skills
 PUT /api/v1/skills/:id: Update a skill
 DELETE /api/v1/skills/:id: Delete a skill
+```
+
 Projects Management
+```
 POST /api/v1/projects: Add a new project
 GET /api/v1/projects: Get all projects
 PUT /api/v1/projects/:id: Update a project
 DELETE /api/v1/projects/:id: Delete a project
+```
+
 Contributing
 If you'd like to contribute to this project, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 

@@ -96,11 +96,11 @@ Update your profile with your avatar and resume.
 Add and manage your skills and projects.
 API Endpoints
 Authentication
-```
-POST /api/v1/auth/register: Register a new user
+
+```POST /api/v1/auth/register: Register a new user
 POST /api/v1/auth/login: Log in a user
 POST /api/v1/auth/logout: Log out a user
-
+```
 User Management
 ```
 GET /api/v1/user: Get user profile

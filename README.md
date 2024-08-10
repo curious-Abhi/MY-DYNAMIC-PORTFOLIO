@@ -97,10 +97,10 @@ Add and manage your skills and projects.
 API Endpoints
 Authentication
 
-```POST /api/v1/auth/register: Register a new user
+POST /api/v1/auth/register: Register a new user
 POST /api/v1/auth/login: Log in a user
 POST /api/v1/auth/logout: Log out a user
-```
+
 User Management
 ```
 GET /api/v1/user: Get user profile
@@ -126,6 +126,7 @@ DELETE /api/v1/projects/:id: Delete a project
 ```
 
 Contributing
+```
 If you'd like to contribute to this project, please fork the repository and use a feature branch. Pull requests are warmly welcome.
 
 Fork the repository.

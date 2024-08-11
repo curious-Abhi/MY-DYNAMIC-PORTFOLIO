@@ -11,6 +11,11 @@ Welcome to my full stack dynamic portfolio project! This project showcases my sk
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 
+## Preview
+
+## Live Demo
+-[https://beautiful-lily-99f642.netlify.app/](#click)
+
 ## Overview
 
 This project is a dynamic portfolio built using the PERN stack (PostgreSQL, Express.js, React, and Node.js). It includes a user authentication system, the ability to manage skills and projects, and features to upload avatars and resumes. It is deployed and accessible online for potential employers and collaborators to view.

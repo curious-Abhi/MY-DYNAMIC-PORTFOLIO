@@ -14,7 +14,7 @@ Welcome to my full stack dynamic portfolio project! This project showcases my sk
 ## Preview
 
 ## Live Demo
--[https://beautiful-lily-99f642.netlify.app/](#click)
+ https://beautiful-lily-99f642.netlify.app/
 
 ## Overview
 
